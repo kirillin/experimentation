@@ -1,0 +1,7 @@
+Theophilus Thistle, the successful thistle-sifter, Sifted sixty thistles through the thick of his thumb. Thick thistle sticks. Six thick thistles stuck together.
+Маленький цифровой ревербератор с регулятором уровня волюми... Реверберировал, реверберировал, да не выреверберировал...... 
+Собственные исключения
+Разработчик может создать собственное исключение как подкласс класса Exception и затем использовать его при обработке ситуаций, не являющихся исключениями с точки зрения языка, но нарушающих логику вещей. Например, появление объектов типа Human (Человек) с отрицательным значением поля age (возраст). /* пример # 5 : метод, вызывающий исключение, созданное программистом: RunnerLogic.java */
+package chapt08;
+public class RunnerLogic { public static double salary(int coeff) throws SalaryException { double d; try { if((d = 10 - 100/coeff) < 0) throw new SalaryException("negative salary");
+else return d; } catch (ArithmeticException e) { throw new SalaryException("div by zero", e); } } public static void main(String[] args) { try { double res = salary(3); //или 0, или 71; } catch (SalaryException e) { System.err.println(e.toString()); System.err.println(e.getHiddenException()); } } }

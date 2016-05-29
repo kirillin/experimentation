@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Sing in page</title>
+<link rel="stylesheet" href="styles/style.css" type="text/css" media="screen" />
+</head>
+<body>
+<div id="signin">
+	<form name="singinForm" action="Controller" method="post">
+		<h1>${text['SING_IN']}</h1>
+		<hr />
+			<input type="hidden" name="command" value="singin" />
+			<br /><LABEL>Login:</LABEL> <input autofocus="autofocus" type="text" name="login" />
+			<br /><LABEL>Password:</LABEL> <input type="password" name="password"/>
+			<input class="button" type="submit" value="Sign in" />
+	</form>
+</div>
+</body>
+</html>
+</jsp:root>

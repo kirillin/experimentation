@@ -1,0 +1,20 @@
+log4j.rootLogger=debug, file
+
+log4j.appender.file=org.apache.log4j.FileAppender
+log4j.appender.file.File=task2.problem15.log
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{HH:mm:ss}%c{1} %-4p - %m%n
+
+log4j.logger.kz.epam.task2.utils.IOFile=debug, IOFile
+
+log4j.appender.IOFile=org.apache.log4j.FileAppender
+log4j.appender.IOFile.File=AnalizeText.log
+log4j.appender.IOFile.layout=org.apache.log4j.PatternLayout
+log4j.appender.IOFile.layout.ConversionPattern=%d{mm:ss,SSSS} %-5p %c{1} <%M>:%L - %m%n
+
+log4j.logger.kz.epam.task2.problems.MyProblem=debug, MyProblem
+
+log4j.appender.MyProblem=org.apache.log4j.FileAppender
+log4j.appender.MyProblem.File=MyProblem.log
+log4j.appender.MyProblem.layout=org.apache.log4j.PatternLayout
+log4j.appender.MyProblem.layout.ConversionPattern=%d{mm:ss,SSSS} %-5p %c{1} <%M>:%L - %m%n

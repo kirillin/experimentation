@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.epam.kz/airplane/plane__.xsd"
+        targetNamespace="http://www.epam.kz/airplane/plane__.xsd">
+  <element name="aircrafts">
+    <complexType>
+      <sequence>
+        <element id="ID1" name ="aircraft" type="tns:airEntity" minOccurs="1" maxOccurs="unbounded" />
+      </sequence>
+    </complexType>
+  </element>
+  <complexType name ="Aircraft">
+    <sequence>
+      <element name ="Origin">
+        <complexType>
+          <sequence>
+			  <element name="title" type="string" />
+			  <element name="emailOfOrigin" type="tns:Email" />
+			  <element name="telephonNumber" type="tns:Telephon" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="maxSpeed" type="decimal"/>
+      <element name="range" type="integer" />
+      <element name="mass" type="decimal" />
+      <element name="maxTakeoffWeight" type="decimal" />
+      <element name="altitude" type="integer" />
+      <element name="crew" type="integer" />
+      <element name="fuelConsumption" type="decimal" />
+    </sequence>
+    <attribute name="id" type="tns:id" />
+    <attribute name="model" type="string" />
+    <attribute name="typeOfAircraft" type="string" />
+  </complexType>
+  <complexType name="ClassC">
+    <complexContent>
+      <extension base="tns:Aircraft">
+        <sequence>
+          <element name="wingspan" type="decimal" />
+          <element name="takeoffDistance" type="integer" />
+          <element name="quantityEngines" type="integer" />
+          <element name="typeOfEngines" type ="tns:TypeOfEngines" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="airEntity">
+    <!-- :) -->
+    <complexContent>
+      <extension base="tns:ClassC">
+        <choice>
+          <sequence>
+            <element name="passengersCapacity" type="integer" />
+            <element name="flightAttendant" type="integer" />
+          </sequence>
+          <sequence>
+            <element name="maxVolumePayload" type="float" />
+            <element name="payloadCapacity" type="float" />
+          </sequence>
+        </choice>
+      </extension>
+    </complexContent>
+  </complexType>
+  <simpleType name="id">
+    <restriction base="ID">
+      <pattern value="[a-zA-Z]{2}[0-9]+" />
+    </restriction>
+  </simpleType>
+  <simpleType name="TypeOfEngines">
+    <restriction base="string">
+      <enumeration value="PISTON" />
+      <enumeration value="TURBOFUN" />
+      <enumeration value="TURBOJET" />
+      <enumeration value="JET" />
+    </restriction>
+  </simpleType>
+  <simpleType name="Email">
+    <restriction base="string">
+      <pattern value="\w+\W*\w*@{1}\w+\W*\w+.\w+.*\w*" />
+    </restriction>
+  </simpleType>
+  <simpleType name="Telephon">
+    <restriction base="string">
+          <pattern value="((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}" />
+    </restriction>
+  </simpleType>
+</schema>

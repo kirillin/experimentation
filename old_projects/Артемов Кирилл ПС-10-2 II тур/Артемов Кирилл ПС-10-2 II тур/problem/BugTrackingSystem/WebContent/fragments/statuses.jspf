@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					version="2.0">
+<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="true" />				
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Statuses</title>
+</head>
+<body>
+	<H1>Statuses</H1>
+	<c:if test="${pageContext.request.getAttribute('added')}">
+		<span id="green-warning">Статус добавлен!</span>
+	</c:if>
+		<table border="1" cellpadding="0" cellspacing="0" width="100%">
+			<tr></tr>
+			<tr>
+				<th>Статус</th>
+				<th>Сотрудник назначивший статус</th>
+				<th>Дата задания статуса</th>
+				<TH />
+			</tr>
+			<tr>
+			<form action="Controller" method="POST" id="form-table" >
+					<input type="hidden" name="command" value="addStatus" />
+					<input type="hidden" name="errorId" value="${pageContext.request.getAttribute('errorId')} }" />
+					<td> 
+					<c:if test="${pageContext.session.getAttribute('errorsStatus') != null}">
+						<select name="errorsStatusId" >
+							<option selected="selected"></option>							
+							<c:forEach items="${sessionScope.errorsStatus}" var="errs">
+								<option value="${errs.id}" >${errs.getStatusName()}</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					</td>		
+					<td> 
+					<c:if test="${pageContext.session.getAttribute('employees') != null}">
+						<select name="employeeId" >
+							<option selected="selected"></option>							
+							<c:forEach items="${sessionScope.employees}" var="e">
+								<option value="${e.id}" >${e.getFirstName()} ${e.getLastName()}</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					</td>	
+					<td></td>
+					<td> <input type="submit" value="Добавить" /></td>
+				</form>
+			</tr>
+			<c:if test="${pageContext.session.getAttribute('statuses') != null}">			
+			<c:forEach var="s" items="${sessionScope.statuses}">
+				<tr>
+					<td><c:out value="${s.getErrorsStatus()}"></c:out> </td>
+					<td><c:out value="${s.getEmployeeName()}"></c:out> </td>
+					<td><c:out value="${s.getRegisterDate()}"></c:out> </td>
+					<td><a id="a-button" href="Controller?command=updateStatus&amp;statusId=${s.getId()}">РЕДАКТИРОВАТЬ</a></td>
+				</tr>
+			</c:forEach>				
+			</c:if>
+		</table>	
+
+
+</body>
+</html>
+</jsp:root>

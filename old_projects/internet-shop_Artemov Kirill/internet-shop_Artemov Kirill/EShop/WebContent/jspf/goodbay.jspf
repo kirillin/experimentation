@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Goodbay</title>
+</head>
+<body>
+<h1>${text['GOODBAY']}</h1>
+<hr />
+		<jsp:scriptlet>
+			session.removeAttribute("user");
+			session.removeAttribute("admin");
+			session.removeAttribute("isEnterUser");
+			// session.removeAttribute("cart");			
+		</jsp:scriptlet> 
+<hr />
+<a href="index.jspx?menu_id=2">${text['SING_IN']}?</a>
+	
+</body>
+</html>
+</jsp:root>

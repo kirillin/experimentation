@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					version="2.0">
+<jsp:directive.page contentType="text/html; charset=UTF-8" 
+		pageEncoding="UTF-8" session="true"/>
+<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Employee edit</title>
+</head>
+<body>
+	<H1>Employee edit</H1>
+	<c:if test="${pageContext.request.getAttribute('saved')}">
+		<span id="green-warning">Сохранено!</span>
+	</c:if>
+	<c:if test="${pageContext.session.getAttribute('employee') != null}">
+		<c:if test="${pageContext.session.getAttribute('departments') != null}">
+		<c:set var="e" scope="page" value="${sessionScope.employee}" />
+		<c:set var="d" scope="page" value="${sessionScope.departments}" />
+
+			<form style="width:400px;" name="updateEmployee" action="Controller" method="post">
+				<hr />
+					<input type="hidden" name="command" value="updateEmployee" />
+					<input type="hidden" name="employeeId" value="${e.id}" />
+					<br /><LABEL>Фамилия:</LABEL> <input type="text" pattern="[A-Za-zА-Яа-яЁё]+" name="firstName" value="${e.getFirstName()}" />
+					<br /><LABEL>Имя:</LABEL> <input type="text" pattern="[A-Za-zА-Яа-яЁё]+" name="lastName" value="${e.getLastName()}" />
+					<br /><LABEL>Отчество:</LABEL> <input type="text" pattern="[A-Za-zА-Яа-яЁё]+" name="middleName" value="${e.getMiddleName()}" />
+					<br /><LABEL>Отдел:</LABEL> 
+					<select name="departmentId" >
+						
+						<c:forEach items="${sessionScope.departments}" var="dd">
+							<c:if test="${dd.id == e.id}">
+								<option selected="selected" value="${dd.id}" >${dd.getDepartmentName()}</option>							
+							</c:if>
+						</c:forEach>
+						<c:forEach items="${sessionScope.departments}" var="dd">
+							<option value="${dd.id}" >${dd.getDepartmentName()}</option>
+						</c:forEach>
+					</select>
+								
+					<input class="button" type="submit" value="Сохранить" />
+			</form>
+		</c:if>
+	</c:if>
+</body>
+</html>
+</jsp:root>

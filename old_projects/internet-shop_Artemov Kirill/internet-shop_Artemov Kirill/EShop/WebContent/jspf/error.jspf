@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root 	xmlns:jsp="http://java.sun.com/JSP/Page" 
+						version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Error</title>
+</head>
+<body>
+<h1>${text['ERROR_PAGE']}</h1>
+<hr />
+	<h2 id="red-warning">
+		<jsp:expression>
+			(request.getAttribute("errorMessage") != null) 
+			? (String) request.getAttribute("errorMessage") 
+			: "unknow error"
+		</jsp:expression>
+	</h2>
+<hr />
+<br /><a href="" onclick="history.back();">${text['GO_BACK']}</a>
+<a href="/EShop${pageContext.request.getAttribute('prevpage')}"></a>
+
+	
+</body>
+</html>
+</jsp:root>

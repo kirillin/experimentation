@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"					
+					xmlns:ex="/WEB-INF/taglib.tld" 
+					version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>shop</title>
+<link rel="stylesheet" href="styles/style.css" type="text/css" media="screen" />
+</head>
+<body>
+	<h1>${text['CHECKOUT']}</h1>
+	<hr />
+	<c:set var="order" scope="session" 	value="${pageContext.session.getAttribute('addOrder')}" />
+	<c:choose>
+		<c:when test="${order eq true}">
+			<h2 style="text-align: center; color: green;">${text['CONGRAT']}</h2>
+			<p style="color: silver;" align="center">
+				<a href="Controller?command=getOrders&amp;user=${sessionScope.user}">
+			 		${text['GO_TO_ORDER_PAGE']}
+			 	</a>
+			 </p>			
+			<p style="color: silver;" align="center">
+				<a href="Controller?command=getCatalog"> 
+					${text['GO_TO_SHOP_PAGE']}
+				</a>
+			</p>
+			${pageContext.session.setAttribute('addOrder', false)}
+		</c:when>
+		<c:when test="${(order eq null) or (order eq false)}">
+			<div class="info-method">
+				<h2>${text['SHIPPING_INFO']}</h2>
+				<ul id="ul-info">
+					<c:forEach items="${sessionScope.shippingMethods}" var="shipp">
+						<li>
+							<h4>${shipp.getShippingMethod()}: </h4>
+							<p tabindex="2"><c:out value="${shipp.getDescription() }" /></p>
+						</li>					
+					</c:forEach>				
+				</ul>
+				<br />
+				<h2>${text['PAYMENT_INFO']}</h2>
+				<ul id="ul-info">
+					<c:forEach items="${sessionScope.paymentMethods}" var="pay">
+						<li>
+							<h4>${pay.getPaymentMethod()}: </h4>
+							<p tabindex="2"><c:out value="${pay.getDescription() }" /></p>
+						</li>					
+					</c:forEach>				
+				</ul>
+			</div>				
+			<form style="float: left; border-left: 1px solid black; width: 655px; height: 500px;" action="Controller" method="post">
+					<input type="hidden" name="command" value="checkout" />
+					<h2 align="center">${text['FILLUP_FORM']}</h2>
+					<br /><label>${text['SELECT_CITY']}:</label>
+					<select name="cityid" >
+						<option selected="selected" ></option>
+						<c:forEach items="${sessionScope.cities}" var="city">
+							<option value="${city.id}" >${city.getCity()}</option>
+						</c:forEach>
+					</select><font id="advice">select where you are liveing</font>
+								
+					<br /><label>${text['SELECT_SHIPPING']}:</label> 
+					<select name="shippingid" >
+						<option selected="selected" ></option>			
+						<c:forEach items="${sessionScope.shippingMethods}" var="shipp">
+							<option value="${shipp.id}" >${shipp.getShippingMethod()}</option>
+						</c:forEach>
+					</select><font id="advice">select how you want shipping your purchase</font>
+					
+					<br /><label>${text['SELECT_PAYMENT']}:</label>
+					<select name="paymentid" >
+						<option selected="selected" ></option>			
+						<c:forEach items="${sessionScope.paymentMethods}" var="pay">
+							<option value="${pay.id}" >${pay.getPaymentMethod()}</option>
+						</c:forEach>
+					</select><font id="advice">how you want pay for your purchase</font>
+					
+					<br /><label>ZIP:</label> <input type="text" name="zip" />
+					<font id="advice">ZIP code is for example 123456789</font>
+					<br /><label>${text['ADRESS']}:</label> <input type="text" name="adress" />
+					<font id="advice">You can use letters and number.(no less then 3 characters)</font>
+					<br /><label>${text['TELEPHONE']}:</label> <input type="text" name="phone" value="87" />
+					<font id="advice">Phone number consist of 11 character (example: 87001234567)</font>
+					<input class="button" type="submit" value="Ok" />
+			</form>
+	
+		</c:when>
+	</c:choose>
+</body>
+</html>
+</jsp:root>

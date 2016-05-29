@@ -1,0 +1,31 @@
+log4j.rootLogger=info, console, file
+
+log4j.appender.console=org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout=org.apache.log4j.PatternLayout
+log4j.appender.console.layout.ConversionPattern= %p : %m%n
+
+log4j.appender.file=org.apache.log4j.FileAppender
+log4j.appender.file.File=task3.parsers.log
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{HH:mm:ss}%c{1} %-4p - %m%n
+
+log4j.logger.kz.epam.airline.utiles.parsers.handlers.SAXHandler=info, SAXHandler
+
+log4j.appender.SAXHandler=org.apache.log4j.FileAppender
+log4j.appender.SAXHandler.File=SAXHandler.log
+log4j.appender.SAXHandler.layout=org.apache.log4j.PatternLayout
+log4j.appender.SAXHandler.layout.ConversionPattern=%d{mm:ss,SSSS} %-5p %c{1} <%M>:%L - %m%n
+
+log4j.logger.kz.epam.airline.utiles.parsers.handlers.DOMHandler=info, DOMHandler
+
+log4j.appender.DOMHandler=org.apache.log4j.FileAppender
+log4j.appender.DOMHandler.File=DOMHandler.log
+log4j.appender.DOMHandler.layout=org.apache.log4j.PatternLayout
+log4j.appender.DOMHandler.layout.ConversionPattern=%d{mm:ss,SSSS} %-5p %c{1} <%M>:%L - %m%n
+
+log4j.logger.kz.epam.airline.utiles.parsers.handlers.StAXHandler=info, StAXHandler
+
+log4j.appender.StAXHandler=org.apache.log4j.FileAppender
+log4j.appender.StAXHandler.File=StAXHandler.log
+log4j.appender.StAXHandler.layout=org.apache.log4j.PatternLayout
+log4j.appender.StAXHandler.layout.ConversionPattern=%d{mm:ss,SSSS} %-5p %c{1} <%M>:%L - %m%n

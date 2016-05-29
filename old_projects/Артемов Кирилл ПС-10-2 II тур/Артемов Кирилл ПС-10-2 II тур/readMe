@@ -1,0 +1,8 @@
+язык программирования: Java
+версия jre: 1.7
+сервер: tomcat 7.0
+сервер БД: mysql 5.6.10
+
+проект задачи в папке ./problem/BugTrackingSystem
+скрипт БД в папке ./database/bts.sql
+	mysql.exe --default-character-set=utf8 -uroot < eshop.sql

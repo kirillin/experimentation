@@ -1,0 +1,317 @@
+html,body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-size: 14px;
+	color: rgb(34,34,34);	
+}
+
+a {
+	color: rgb(34,34,34);
+	text-decoration: none;
+	cursor: default;
+}
+
+a:HOVER {
+	color: green;
+	text-decoration: underline;
+	cursor: default;
+}
+
+#a-button {
+	padding: 2px; 
+	margin: 1px;
+	color: white;
+	background-color: green;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	margin: 5px 0;
+	padding: 0;
+}
+
+li {
+	display: inherit;
+	padding: 2px;
+	margin: 2px;
+}
+
+
+ul.profile {
+	display: list-item;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+ul.header {
+	display: inline;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	font-size: 16pt;
+	color: rgb(34,34,34);
+	font-weight: bold;
+}
+
+form {
+	margin: 0 auto;
+	width: 350px;
+	padding: 20px 0;
+}
+
+form label {
+	float: left;
+	font-weight: bold;
+	text-align: right;
+	width: 100px;
+}
+
+form input {
+	float: left;
+	padding: 3px;
+	margin: 5px;
+	border: solid 1px rgb(34,34,34);
+	width: 200px;
+}
+
+form select {
+	float: left;
+	padding: 3px;
+	margin: 5px;
+	border: solid 1px rgb(34,34,34);
+	width: 208px;
+}
+
+form input.button {
+	float: left;
+	padding: 3px;
+	margin: 5px;
+	margin-left: 105px;
+	border: solid 1px rgb(34,34,34);
+	width: 208px;
+}
+
+#header {
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 150px;
+	padding: 1px;
+	border-bottom: 1px solid rgb(34,34,34);
+	border-left: 8px solid green;
+	background-color: white;
+}
+
+#content {
+	width: 90%;
+	margin: 152px auto;
+	padding: 10px;
+}
+
+#footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	padding: 0 100px 0 10px;
+	width: 90%;
+	color: silver;
+}
+
+#signin {
+	font-size: 14px;
+	height: 500px;
+	width: 500px;
+	margin: 10px auto;
+}
+
+#head-container {
+	width: 100%;
+	line-height: 0.7;
+}
+
+#menu {
+	margin-top: 125px;
+	margin-left: 10px;
+	padding: 0;
+	width: 100%;
+}
+
+#logo {
+	position: absolute;
+	top: 30px;
+	left: 10px;
+	margin: 0 auto;	
+	padding: 0;
+	width: 80px;
+	font-size: 30pt;
+	font-weight: bold;
+	color: rgb(34,34,34);
+	font-family: Consolas;
+}
+
+#logo-shop {
+	position: inherit;
+	margin-right: 0;
+	margin-left: 108px;	
+	padding: 0;
+	width: 100px;
+	height: 36pt;
+	font-size: 50pt;
+	color: green;
+}
+
+.info {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 300px;
+	height: 153px;
+	border-left: 0px solid green;
+}
+
+#profile-sidebar {
+	border-right: 1px solid rgb(34,34,34);
+	width: 15%;
+	height: 100%;
+	text-align: right;
+	padding: 0 10px;
+	float: left;
+}
+
+#profile-content {
+	width: 80%;
+	height: 100%;
+	text-align: left;
+	padding: 0 10px;
+	float: right;
+}
+
+#profile-menu {
+	margin: 4px;
+	font-size: 16pt;
+	font-weight: bold;
+	text-align: right;
+	color: green;
+}
+
+.hoverbox {
+	background: white;
+	cursor: default;
+	list-style: none;
+}
+
+.hoverbox a {
+	color: silver;
+}
+
+.hoverbox li {
+	border: 1px solid rgb(34,34,34);
+	margin: 10px;
+	padding: 10px;
+	width: 200px;
+	height: 350px;
+	float: left;
+}
+
+.hoverbox div {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.hoverbox img {
+	border: 1px solid rgb(34,34,34);
+	width: 160px;
+	height: 120px;
+	margin: 0 auto;
+}
+
+.info-method {
+	float: left;
+	margin: 0;
+	padding: 5px;
+	width: 30%;
+	color: #828288;
+}
+
+#ul-info {
+	list-style-type: circle;	
+	margin: 0;
+	padding: 0;
+}
+
+h5 {
+	flaot: left;
+	width: 20%;
+	margin: 0;
+	color: silver;
+}
+
+h4 {
+	color: green;
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	color: green;
+}
+
+#red-warning {
+	color: red;
+}
+
+#green-warning {
+	color: green;
+}
+
+ul.language {
+	float: right;
+	display: list-item;
+	list-style-type: none;
+	padding: 5px;
+	margin: 5px;
+	font-size: 7pt;
+	color: rgb(34,34,34);
+}
+
+table {
+	font-size: 12px;	
+}
+
+tr:hover {
+    background: lightgreen;
+    color: black;
+}
+
+th {
+	background-color: green;
+	color: white;
+}
+
+td, th {
+	padding: 2px;
+}
+
+#advice {
+	float: left;
+	position: relative;
+	width: 250px;
+	height: 50px;
+	color: silver;
+}
+
+
+
+
+
+ 

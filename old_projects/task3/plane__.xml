@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<aircrafts 	xmlns="http://www.epam.kz/airplane/plane__.xsd">
+  <aircraft id="ID1" model="Airbus A380" typeOfAircraft="PASSENGER_ARIPLANE" xmlns="">
+    <Origin>
+      <title>Airbus</title>
+      <emailOfOrigin>an@an.ru</emailOfOrigin>
+      <telephonNumber>8 (123) 1234567</telephonNumber>
+    </Origin>
+    <maxSpeed>1020</maxSpeed>
+    <range>15200</range>
+    <mass>361.0</mass>
+    <maxTakeoffWeight>560.0</maxTakeoffWeight>
+    <altitude>13115</altitude>
+    <crew>2</crew>
+    <fuelConsumption>16.1</fuelConsumption>
+    <wingspan>79.6</wingspan>
+    <takeoffDistance>2050</takeoffDistance>
+    <quantityEngines>4</quantityEngines>
+    <typeOfEngines>TURBOJET</typeOfEngines>
+    <passengersCapacity>555</passengersCapacity>
+    <flightAttendant>124</flightAttendant>
+  </aircraft>
+  <aircraft id="ID2" model="Boing 747" typeOfAircraft="PASSENGER_ARIPLANE" xmlns="">
+    <Origin>
+      <title>Boing</title>
+      <emailOfOrigin>an@an.ru</emailOfOrigin>
+      <telephonNumber>8 (123) 1234567</telephonNumber>
+    </Origin>
+    <maxSpeed>988</maxSpeed>
+    <range>14815</range>
+    <mass>276.7</mass>
+    <maxTakeoffWeight>435.4</maxTakeoffWeight>
+    <altitude>13000</altitude>
+    <crew>2</crew>
+    <fuelConsumption>15.54</fuelConsumption>
+    <wingspan>68.5</wingspan>
+    <takeoffDistance>3350</takeoffDistance>
+    <quantityEngines>4</quantityEngines>
+    <typeOfEngines>TURBOJET</typeOfEngines>
+    <passengersCapacity>581</passengersCapacity>
+    <flightAttendant>18</flightAttendant>
+  </aircraft>
+  <aircraft id="ID3" model="Ан-70" typeOfAircraft="TRANSPORT_AIRPLANE" xmlns="">
+    <Origin>
+      <title>Russian Conpany</title>
+      <emailOfOrigin>an@an.ru</emailOfOrigin>
+      <telephonNumber>8 (123) 1234567</telephonNumber>
+    </Origin>
+    <maxSpeed>780</maxSpeed>
+    <range>7800</range>
+    <mass>73</mass>
+    <maxTakeoffWeight>135</maxTakeoffWeight>
+    <altitude>12000</altitude>
+    <crew>6</crew>
+    <fuelConsumption>6</fuelConsumption>
+    <wingspan>44.1</wingspan>
+    <takeoffDistance>650</takeoffDistance>
+    <quantityEngines>4</quantityEngines>
+    <typeOfEngines>TURBOJET</typeOfEngines>
+    <maxVolumePayload>440.1</maxVolumePayload>
+    <payloadCapacity>47</payloadCapacity>  
+  </aircraft>
+  <aircraft id="ID4" model="Boing C-17" typeOfAircraft="TRANSPORT_AIRPLANE" xmlns="">
+    <Origin>
+      <title>Boing</title>
+      <emailOfOrigin>an@an.ru</emailOfOrigin>
+      <telephonNumber>8 (123) 1234567</telephonNumber>
+    </Origin>
+    <maxSpeed>833</maxSpeed>
+    <range>4445</range>
+    <mass>122</mass>
+    <maxTakeoffWeight>265</maxTakeoffWeight>
+    <altitude>13715</altitude>
+    <crew>3</crew>
+    <fuelConsumption>23</fuelConsumption>
+    <wingspan>51.7</wingspan>
+    <takeoffDistance>2360</takeoffDistance>
+    <quantityEngines>4</quantityEngines>
+    <typeOfEngines>TURBOFUN</typeOfEngines>
+    <maxVolumePayload>592</maxVolumePayload>
+    <payloadCapacity>69</payloadCapacity>
+  </aircraft>
+</aircrafts>

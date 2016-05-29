@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" 
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+id="WebApp_ID" version="2.5">
+  <display-name>EShop</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.jspx</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+<!-- TAG LIB config -->  
+  <jsp-config>
+    <taglib>
+      <taglib-uri>/WEB-INF/taglib.tld</taglib-uri>
+      <taglib-location>/WEB-INF/taglib.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+<!-- SERVLET config -->  
+  <servlet>
+    <description>Controller</description>
+    <display-name>Controller</display-name>
+    <servlet-name>Controller</servlet-name>
+    <servlet-class>com.epam.eshop.view.Controller</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/Controller</url-pattern>
+  </servlet-mapping>
+<!-- error-code related error page -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/errors/404.html</location>
+  </error-page>
+<!-- exception-type related error pages -->
+	<error-page>
+	    <exception-type>java.lang.Exception</exception-type >
+	    <location>/Controller?throwable=yes</location>
+	</error-page>
+<!-- session -->
+  <session-config>
+    <session-timeout>-1</session-timeout>
+  </session-config>
+<!-- filters -->
+	<filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>com.epam.eshop.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>  
+	<filter-mapping>
+		<filter-name>EncodingFilter</filter-name>
+		<url-pattern>/Controller</url-pattern>		
+	</filter-mapping>
+	<filter>
+		<filter-name>AuthorizationFilter</filter-name>
+		<filter-class>com.epam.eshop.filter.AuthorizationFilter</filter-class>
+    <init-param>
+      <param-name>error_page</param-name>
+    	<param-value>/errors/403.html</param-value>
+    </init-param>		
+	</filter>  
+	<filter-mapping>
+		<filter-name>AuthorizationFilter</filter-name>
+		<url-pattern>/*</url-pattern>		
+	</filter-mapping>	
+	<filter>
+		<filter-name>i18nFilter</filter-name>
+		<filter-class>com.epam.eshop.filter.i18nFilter</filter-class>
+	</filter>  
+	<filter-mapping>
+		<filter-name>i18nFilter</filter-name>
+		<url-pattern>/*</url-pattern>		
+	</filter-mapping>		
+</web-app>

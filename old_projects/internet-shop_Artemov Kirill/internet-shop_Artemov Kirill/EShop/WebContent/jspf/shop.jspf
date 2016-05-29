@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"					
+					xmlns:ex="/WEB-INF/taglib.tld" 
+					version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>shop</title>
+<link rel="stylesheet" href="styles/style.css" type="text/css" media="screen" />
+</head>
+<body>
+	<br />
+	<jsp:scriptlet> 
+		if (session.getAttribute("products") != null) {
+	</jsp:scriptlet>
+		<ul class="hoverbox">
+			<ex:iterate  collection="${sessionScope.products}" id="product">
+					<li>
+						<div>
+							<p>ProductID: 
+								<c:out value="${product.getProductId()}"></c:out>				
+							</p>
+							<img src="images/pic.jpg" />
+							<c:if test="${isInBlacklist}">
+								<h4 id="red-warning">${text['YOU_BLACK']}</h4>
+							</c:if>
+							<c:if test="${!isInBlacklist and (!product.isActual() or (product.getQuantity() eq 0))}">
+								<p><h4 id="red-warning">${text['PRODUCT_NULL']}</h4></p>
+							</c:if>
+							<c:if test="${((isInBlacklist eq false) or (isInBlacklist eq null)) 
+								and product.isActual() and !(product.getQuantity() eq 0)}">							
+								<form action="Controller" method="POST" >
+										<input type="hidden" name="command" value="addToCart" />
+										<input type="hidden" name="product_id" value="${product.getProductId()}" />
+										<input type="hidden" name="price" value="${product.getProductPrice()}" />
+									<p><input type="submit" value="${text['ADD_TO_CART']}" /></p>
+								</form>
+							</c:if>
+							<p>${text['CATEGORY']}: 
+								<c:out value="${product.getCategory()}"></c:out>
+							</p>
+							<p>${text['TITLE']}: 
+								<c:out value="${product.getProductName()}"></c:out>
+							</p>
+							<p> ${text['PRICE']}: 
+								<fmt:formatNumber type="currency" value="${product.getProductPrice()}" />
+							</p>
+							<p>${text['QTY']}: 
+								<c:out value="${product.getQuantity()}"></c:out>
+							</p>
+							<p>${text['DESC']}: 
+								<c:out value="${product.getDescription()}"></c:out>
+							</p>
+						</div>
+					</li>
+			</ex:iterate>
+		</ul> 		
+	<jsp:scriptlet>
+		}	
+	</jsp:scriptlet>
+		
+</body>
+</html>
+</jsp:root>

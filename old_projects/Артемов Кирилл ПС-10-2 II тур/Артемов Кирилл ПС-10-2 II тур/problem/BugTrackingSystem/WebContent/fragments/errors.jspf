@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					xmlns:fmt="http://java.sun.com/jstl/fmt"	
+					version="2.0">
+<jsp:directive.page contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" session="true" />				
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Errors</title>
+</head>
+<body>
+	<H1>Errors</H1>
+	<c:if test="${pageContext.request.getAttribute('added')}">
+		<span id="green-warning">Ошибка зарегестрирована!</span>
+	</c:if>
+
+	<c:if test="${pageContext.session.getAttribute('errorsView') != null}">
+		<table border="1" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<th>Идентификатор</th>
+				<th>Дата</th>
+				<th>Сотрудник</th>
+				<th>Критичность</th>
+				<th>Проект</th>
+				<th>Опасание</th>
+				<TH />
+			</tr>
+			<tr>
+				<form action="Controller" method="POST" id="form-table" >
+					<input type="hidden" name="command" value="addError" />
+					<td></td>
+					<td></td>
+					<td> 
+					<c:if test="${pageContext.session.getAttribute('employees') != null}">
+						<select name="employeeId" >
+							<option selected="selected"></option>							
+							<c:forEach items="${sessionScope.employees}" var="e">
+								<option value="${e.id}" >${e.getFirstName()} ${e.getLastName() }</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					</td>		
+					<td> 
+					<c:if test="${pageContext.session.getAttribute('errorLevels') != null}">
+						<select name="errorLevelId" >
+							<option selected="selected"></option>							
+							<c:forEach items="${sessionScope.errorLevels}" var="errl">
+								<option value="${errl.id}" >${errl.getLevelName()}</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					</td>	
+					<td> 
+					<c:if test="${pageContext.session.getAttribute('projects') != null}">
+						<select name="projectId" >
+							<option selected="selected"></option>							
+							<c:forEach items="${sessionScope.projects}" var="p">
+								<option value="${p.id}" >${p.getProjectName()}</option>
+							</c:forEach>
+						</select>
+					</c:if>
+					</td>
+					<td> <input type="text" name="description" /></td>
+					<td> <input type="submit" value="Добавить" /></td>
+				</form>
+			</tr>
+			<c:forEach var="error" items="${sessionScope.errorsView}">
+				<tr>
+					<td><c:out value="${error.getErrorId()}"></c:out> </td>
+					<td><c:out value="${error.getRegisterDate()}"></c:out> </td>
+					<td><c:out value="${error.getEmployeeName()}"></c:out> </td>
+					<td><c:out value="${error.getErrorLevelName()}"></c:out> </td>
+					<td><c:out value="${error.getProjectName()}"></c:out> </td>
+					<td><c:out value="${error.getDescriprion()}"></c:out> </td>
+					<td><a id="a-button" href="Controller?command=getStatuses&amp;errorId=${error.getErrorId()}">Статусы</a></td>
+				</tr>
+			</c:forEach>				
+		</table>
+	</c:if>
+
+</body>
+</html>
+</jsp:root>

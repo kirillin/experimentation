@@ -1,0 +1,7 @@
+Theophilus Thistle, the succeful thisle-sifer, Sifted sixty thiles trough the thick of his thumb. Thick thisle sticks. Six thick thiles stuck togeher.
+Маленький цифровой ревебеатор с регулятоом уровня волюми... Реверберировал, ревебеиовал, да не выреерберироал......
+Собствнные исключеня 
+Разработчик может создать собтвнное исключне как подклас клсса Exception и затем исползовать его при обрабтке ситуаций, не явлющихся исключенями с точки зрения языка, но нарушающих логику вещей. Напимер, появлние объектв типа Human ( Человек) с отрицательным значением поля age ( возраст)./* пимер# 5: метод, вызыающий исключне, созданное програистом: RunnerLogic. jva*/
+package chapt08;
+public clas RunnerLogic{ public static double salary ( int coef) throws SalaryException{ double d; try{ if (( d= 1 0 - 1 0 0/ coef)  0) throw new SalaryException (" ngative salary ");
+else retun d;} cath ( ArithmeticException e){ throw new SalaryException (" div by zero ", e);}} public static void main ( String[] args){ try{ double res= salary ( 3);// или 0, или 7 1;} cath ( SalaryException e){ System. er. pritln ( e. toSring ()); System. er. pritln ( e. getHiddeException ());}}}

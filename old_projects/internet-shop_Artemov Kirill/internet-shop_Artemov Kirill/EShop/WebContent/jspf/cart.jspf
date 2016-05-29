@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+					version="2.0">
+<jsp:directive.page import="com.epam.eshop.model.entities.Cart"/>
+<jsp:directive.page import="com.epam.eshop.controller.services.*"/>	
+<jsp:directive.page import="java.util.*" />			
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Sing in page</title>
+<link rel="stylesheet" href="styles/style.css" type="text/css" media="screen" />
+</head>
+<body>
+
+<h1>${text['CART']}</h1>
+<c:set var="map" scope="page" value="${pageContext.request.getAttribute('cartMap')}" ></c:set>
+
+<table border="1" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+	<th>id</th>
+	<th>${text['PRODUCT_NAME']}</th>
+	<th>${text['QTY_ORDERED']}</th>
+	<th>${text['PRICE']}</th>	
+	<th>${text['QTY_AVALIBLE']}</th>	
+	<th></th>
+</tr>
+<c:if test="${map ne null}">
+	<c:forEach items="${map}" var="entry">
+	 	<tr>
+			<td>${entry.key.getId()}</td>
+			<td>${entry.key.getProductName()}</td>
+			<td>
+				<c:if test="${entry.value gt entry.key.getQuantity()}">
+					<h4 id="red-warning">${entry.value}</h4>	
+					<c:set var="isProblemQTY" scope="page" value="${true}" ></c:set>
+				</c:if>
+				<c:if test="${entry.value le entry.key.getQuantity()}">
+					${entry.value}	
+				</c:if>
+			</td>
+			<td>
+				<fmt:formatNumber type="currency" 
+													value="${entry.key.getProductPrice() * entry.value}" />
+			</td>		
+			<td>${entry.key.getQuantity()}</td>		
+			<td>
+				<a id="a-button" href="Controller?command=getCart&amp;del=${entry.key.getId()}&amp;price=${entry.key.getProductPrice()}">
+					${text['DELETE']}
+				</a>
+			</td>
+		</tr>		
+	</c:forEach>
+</c:if>	
+<tr>
+	<td colspan="3" align="right">${text['TOTAL_PRICE']}:</td>
+	<td><fmt:formatNumber type="currency" 
+		value="${pageContext.session.getAttribute('cart').getTotalPrice() }" /> 
+	</td>
+	<td> </td>	
+</tr>
+</table>
+
+<form style="float: left;" action="Controller" method="POST">
+	<input type="hidden" name="command" value="getCart" />
+	<input type="hidden" name="clear" value="true" />
+	<input type="submit" value="${text['CLEAR_CART']}" />
+</form>
+
+	<c:if test="${isProblemQTY}">
+		<span id="red-warning">${text['PROBLEM_QTY']}</span>
+	</c:if>
+<c:if test="${!pageContext.session.getAttribute('cart').getHashMap().isEmpty() and !isProblemQTY}">
+	<form style="float: right;" action="Controller" method="POST">
+		<input type="hidden" name="command" value="getFormData" />
+		<input type="submit" value="${text['CHECK_OUT']}" />
+	</form>
+</c:if>
+</body>
+</html>
+</jsp:root>

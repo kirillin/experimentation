@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					version="2.0">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Welcome</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<hr />
+		<b><jsp:expression>
+			(request.getAttribute("welcome") != null) 
+			? (String) request.getAttribute("welcome") 
+			: "Ooops..."
+		</jsp:expression></b>! Welcome to out shop! 
+<hr />
+<a href="index.jspx?menu_id=1">${text['GO_TO_SHOP_PAGE']}?</a>
+	
+</body>
+</html>
+</jsp:root>

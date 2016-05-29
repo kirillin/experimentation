@@ -1,0 +1,133 @@
+2013-08-01-main--INFO -BlacklistDAO:List of users in black list returned!
+2013-08-02-main--DEBUG-ConnectionPool:Driver loading...
+2013-08-02-main--DEBUG-ConnectionPool:Driver loaded.
+2013-08-02-main--TRACE-ProductService:start adding product!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--TRACE-ProductService:Product added!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--TRACE-ProductDAO:List of products returned from DB!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--INFO -ProductService:Products view OK
+2013-08-02-main--DEBUG-ConnectionPool:Driver loading...
+2013-08-02-main--DEBUG-ConnectionPool:Driver loaded.
+2013-08-02-main--TRACE-ProductService:start adding product!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--TRACE-ProductService:Product added!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--TRACE-ProductDAO:List of products returned from DB!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--INFO -ProductService:Products view OK
+2013-08-02-main--DEBUG-ConnectionPool:Driver loading...
+2013-08-02-main--DEBUG-ConnectionPool:Driver loaded.
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--TRACE-ProductDAO:List of products returned from DB!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--INFO -ProductService:Products view OK
+2013-08-02-main--DEBUG-ConnectionPool:Driver loading...
+2013-08-02-main--DEBUG-ConnectionPool:Driver loaded.
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--TRACE-ProductDAO:List of products returned from DB!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--INFO -ProductService:Products view OK
+2013-08-02-main--DEBUG-ConnectionPool:Driver loading...
+2013-08-02-main--DEBUG-ConnectionPool:Driver loaded.
+2013-08-02-main--TRACE-ProductService:start adding product!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--TRACE-ProductService:Product added!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--TRACE-ProductDAO:List of products returned from DB!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 4
+2013-08-02-main--INFO -CategoryDAO:Category returned!
+2013-08-02-main--DEBUG-ConnectionPool:Free conections: 5
+2013-08-02-main--INFO -ProductService:Products view OK

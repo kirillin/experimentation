@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" 
+					xmlns:c="http://java.sun.com/jsp/jstl/core"
+					version="2.0">
+<jsp:directive.page contentType="text/html; charset=UTF-8" 
+		pageEncoding="UTF-8" session="true"/>
+<jsp:output doctype-root-element="html"
+		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		omit-xml-declaration="true" />
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Edit</title>
+</head>
+<body>
+	
+	<jsp:scriptlet>
+		User user = (User) request.getAttribute("userEnt");
+		pageContext.setAttribute("user", user);
+	</jsp:scriptlet>
+	<h1>Edit youre profile</h1>
+	
+	<c:if test="${pageContext.request.getAttribute('updateOk')}">
+		<span id="green-warning">Данные успешно обновлены!</span>
+	</c:if>
+			
+	<form action="Controller" method="POST" >
+		<input type="hidden" name="command" value="updateUser" />
+	<LABEL>login:</LABEL><input type="text" name="login"  value="${pageContext.request.getAttribute('userEnt').getLogin()}" />
+	<LABEL>password:</LABEL><input type="text" name="password"  value="${pageContext.request.getAttribute('userEnt').getPassword()}" />
+	<LABEL>First name:</LABEL> <input type="text" name="firstName"  value="${pageContext.request.getAttribute('userEnt').getFirstName()}" />
+	<LABEL>last name:</LABEL><input type="text" name="lastName"  value="${pageContext.request.getAttribute('userEnt').getLastName()}" />
+	<LABEL>email:</LABEL><input type="email" name="email"  value="${pageContext.request.getAttribute('userEnt').getEmail()}" />
+	<input type="submit" value="update user" />
+	</form>
+	
+	
+</body>
+</html>
+</jsp:root>
