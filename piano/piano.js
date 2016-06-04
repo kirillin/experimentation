@@ -19,6 +19,9 @@ audioLybrary.getFrequency = function(key, octave) {
 }
 audioLybrary.createChainOfNodes = function() {
 }
+/*
+	TODO Connection pool for OSCILLATOR
+*/
 audioLybrary.play = function(e) {
 	var attack = ATTACK;
 	var decay = DECAY;
