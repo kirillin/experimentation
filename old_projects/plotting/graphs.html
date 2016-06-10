@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            heught: 100%;
+        }
+        #scale {
+            width: 400px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="n0" style="position: absolute; top: 10px; left: 400px;"></div>
+		<div id="n1" style="position: absolute; top: 520px; left: 400px;"></div>
+		<div id="n2" style="position: absolute; top: 1030px; left: 400px;"></div>
+		<div id="n3" style="position: absolute; top: 1540px; left: 400px;"></div>
+        <div style="width: 350px; height: 800px; border: 0px solid red; position: absolute; top: 10px; left: 10px;">
+            <hr />
+            <h2 id="scale">Plane params</h2>
+            <form id="c" name="c">
+                <div id="scale">
+                    <input type="number" id="x1" name="x1" value="-1.1" />
+                    < X < <input type="number" id="x2" name="x2" value="1.1" />
+                </div>
+                <div id="scale">
+                    <input type="number" id="y1" name="y1" value="-1" />
+                    < Y < <input type="number" id="y2" name="y2" value="0.325" />
+                    <br />
+                </div>
+                <hr />
+                <div id="scale">step on axes
+                    <input type="number" id="ticks" name="ticks" value="0.05" />
+                    <br />
+                </div>
+                <div id="scale">
+                    <div style="width: 600px; margin: 0 auto;">left - numeration, center - list of X; right - list of Y
+                        <br />
+<textarea rows="21" cols="2">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</textarea>
+<textarea name="Xs" rows="21" cols="5">
+-1
+-0.9
+-0.8
+-0.7
+-0.6
+-0.5
+-0.4
+-0.3
+-0.2
+-0.1
+0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1</textarea>
+<textarea name="Ys" rows="21" cols="15">
+-0.392469559
+-0.276145936
+-0.162364717
+-0.054857347
+0.042828185
+0.127415507
+0.195981243
+0.246027582
+0.275544287
+0.283058606
+0.26767186
+0.229081832
+0.16759039
+0.084096176
+-0.019927468
+-0.142468773
+-0.281027128
+-0.432674759
+-0.594128958
+-0.761833107
+-0.932044475</textarea>
+                    </div>
+                    <input type="button" value="draw" onClick="getParams();" />
+                    <input type="button" value="save" onClick="save();" />
+                    <br />
+                </div>
+            </form>
+            <br />
+            <hr />
+            <h2>Select point's number for each functions!(from first column)</h2>
+            <form id="points">
+                <div id="scale">
+                    <h3>n=0</h3>
+                    <label>t0</label>
+                    <input type="number" id="n0t0" value="0" />
+					<input type="number" id="n0f0" value="0.26767186" />
+                    <br />
+
+                    <h3>n=1</h3>
+                    <label>t0</label>
+                    <input type="number" id="n1t0" value="0.7071" />
+					<input type="number" id="n1f0" value="-0.44385511" />
+                    <br />
+                    <label>t1</label>
+                    <input type="number" id="n1t1" value="-0.7071" />
+					<input type="number" id="n1f1" value="-0.062206882" />
+                    <br />
+
+                    <h3>n=2</h3>
+                    <label>t0</label>
+                    <input type="number" id="n2t0" value="0.866" />
+					<input type="number" id="n2f0" value="-0.704341953" />
+                    <br />
+                    <label>t1</label>
+                    <input type="number" id="n2t1" value="0" />
+					<input type="number" id="n2f1" value="0.26767186" />
+                    <br />
+                    <label>t2</label>
+                    <input type="number" id="n2t2" value="-0.866" />
+					<input type="number" id="n2f2" value="-0.236985255" />
+                    <br />
+
+                    <h3>n=3</h3>
+                    <label>t0</label>
+                    <input type="number" id="n3t0" value="0.9239" />
+					<input type="number" id="n3f0" value="-0.802428855" />
+                    <br />
+                    <label>t1</label>
+                    <input type="number" id="n3t1" value="0.3827" />
+					<input type="number" id="n3f1" value="-0.000543884" />
+                    <br />
+                    <label>t2</label>
+                    <input type="number" id="n3t2" value="-0.3827" />
+					<input type="number" id="n3f2" value="0.20602682" />
+                    <br />
+                    <label>t3</label>
+                    <input type="number" id="n3t3" value="-0.9239" />
+					<input type="number" id="n3f3" value="-0.303858828" />
+                    <br />
+                </div>
+            </form>
+        </div>
+        <div style="width: 2100px; position: absolute; top: 10px; right: 10px; ">
+            <canvas id="myCanvas" width="2100" height="2970" style="border:1px solid black;"></canvas>
+        </div>
+        <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.7.1.min.js"></script>
+        <script>
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+            var x = canvas.width;
+            var y = canvas.height;
+            var grid = 10;
+             // draw grid
+            var i;
+            var n;
+            if(x > y) {
+                n = x;
+            } else {
+                n = y;
+            }
+            for(i = 0; i < n; i += grid) {
+                context.beginPath();
+                context.moveTo(i, 0);
+                context.lineTo(i, y);
+                context.moveTo(0, i);
+                context.lineTo(x, i);
+                if((i % 250) == 0) {
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'black';
+                } else if((i % 50) == 0) {
+                    context.lineWidth = 1.2;
+                    context.strokeStyle = 'black';
+                } else if((i % 25) == 0) {
+                    context.lineWidth = 1;
+                    context.strokeStyle = '#666666';
+                } else {
+                    context.lineWidth = 1;
+                    context.strokeStyle = 'silver';
+                }
+                context.stroke();
+            }
+             // end draw grid
+
+            function save() {
+                window.open(canvas.toDataURL("image/jpg"), "mywindow");
+            }
+
+            function getArrOfX() {
+                var xs = document.c.Xs.value;
+                var xs_arr = xs.split('\n');
+                return xs_arr
+            }
+
+            function getArrOfY() {
+                var ys = document.c.Ys.value;
+                ys_arr = ys.split('\n');
+                return ys_arr
+            }
+
+            function getParams() {
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				// Restore the transform
+				context.restore();
+			for(i = 0; i < n; i += grid) {
+                context.beginPath();
+                context.moveTo(i, 0);
+                context.lineTo(i, y);
+                context.moveTo(0, i);
+                context.lineTo(x, i);
+                if((i % 250) == 0) {
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'black';
+                } else if((i % 50) == 0) {
+                    context.lineWidth = 1.2;
+                    context.strokeStyle = 'black';
+                } else if((i % 25) == 0) {
+                    context.lineWidth = 1;
+                    context.strokeStyle = '#666666';
+                } else {
+                    context.lineWidth = 1;
+                    context.strokeStyle = 'silver';
+                }
+                context.stroke();
+            }
+                var x_min = document.forms["c"].elements["x1"].value;
+                var x_max = document.forms["c"].elements["x2"].value;
+                var y_min = document.forms["c"].elements["y1"].value;
+                var y_max = document.forms["c"].elements["y2"].value;
+                // step on axes
+                var t = document.forms["c"].elements["ticks"].value;
+                // get from text areas coordinates
+                var xs_arr = getArrOfX();
+                var ys_arr = getArrOfY();
+
+                function Graph(canvasId, minX, minY, maxX, maxY, unitsPerTick) {
+                    // user defined properties
+                    this.canvas = document.getElementById(canvasId + '');
+                    // there is magic!
+                    this.minX = minX * 1;
+                    this.minY = maxY * -1;
+                    this.maxX = maxX * 1;
+                    this.maxY = minY * -1;
+                    this.unitsPerTick = unitsPerTick * 1;
+                    // constants
+                    this.axisColor = 'black';
+                    this.font = '16pt Calibri';
+                    this.tickSize = 10;
+                    // relationships
+                    this.context = this.canvas.getContext('2d');
+                    this.rangeX = this.maxX - this.minX;
+                    this.rangeY = this.maxY - this.minY;
+                    this.unitX = this.canvas.width / this.rangeX;
+                    this.unitY = this.canvas.height / this.rangeY;
+                    this.centerY = Math.round(Math.abs(this.minY / this.rangeY) * this.canvas.height);
+                    this.centerX = Math.round(Math.abs(this.minX / this.rangeX) * this.canvas.width);
+                    this.iteration = (this.maxX - this.minX) / 1000;
+                    this.scaleX = this.canvas.width / this.rangeX;
+                    this.scaleY = this.canvas.height / this.rangeY;
+                    // draw x and y axis
+                    this.drawXAxis();
+                    this.drawYAxis();
+                }
+                Graph.prototype.drawXAxis = function () {
+                    var context = this.context;
+                    context.save();
+                    context.beginPath();
+                    context.moveTo(0, this.centerY);
+                    context.lineTo(this.canvas.width, this.centerY);
+                    context.strokeStyle = this.axisColor;
+                    context.lineWidth = 4;
+                    context.stroke();
+                    // draw tick marks
+                    var xPosIncrement = this.unitsPerTick * this.unitX;
+                    var xPos, unit;
+                    context.font = this.font;
+                    context.textAlign = 'center';
+                    context.textBaseline = 'top';
+                    // draw left tick marks
+                    xPos = this.centerX - xPosIncrement;
+                    unit = -1 * this.unitsPerTick;
+                    while(xPos > 0) {
+                        context.moveTo(xPos, this.centerY - this.tickSize / 2);
+                        context.lineTo(xPos, this.centerY + this.tickSize / 2);
+                        context.stroke();
+                        context.fillText(unit, xPos, this.centerY + this.tickSize / 2 + 3);
+                        unit -= this.unitsPerTick;
+                        unit = Math.round(unit * 10000) / 10000;
+                        xPos = Math.round(xPos - xPosIncrement);
+                    }
+                    // draw right tick marks
+                    xPos = this.centerX + xPosIncrement;
+                    unit = this.unitsPerTick;
+                    while(xPos < this.canvas.width) {
+                        context.moveTo(xPos, this.centerY - this.tickSize / 2);
+                        context.lineTo(xPos, this.centerY + this.tickSize / 2);
+                        context.stroke();
+                        context.fillText(unit, xPos, this.centerY + this.tickSize / 2 + 3);
+                        unit += this.unitsPerTick;
+                        unit = Math.round(unit * 10000) / 10000;
+                        xPos = Math.round(xPos + xPosIncrement);
+                    }
+                    context.restore();
+                };
+                Graph.prototype.drawYAxis = function () {
+                    var context = this.context;
+                    context.save();
+                    context.beginPath();
+                    context.moveTo(this.centerX, 0);
+                    context.lineTo(this.centerX, this.canvas.height);
+                    context.strokeStyle = this.axisColor;
+                    context.lineWidth = 4;
+                    context.stroke();
+                    // draw tick marks
+                    var yPosIncrement = this.unitsPerTick * this.unitY;
+                    var yPos, unit;
+                    context.font = this.font;
+                    context.textAlign = 'start';
+                    context.textBaseline = 'middle';
+                    // draw top tick marks
+                    yPos = this.centerY - yPosIncrement;
+                    unit = 1 * this.unitsPerTick;
+                    while(yPos > 0) {
+                        context.moveTo(this.centerX - this.tickSize / 2, yPos);
+                        context.lineTo(this.centerX + this.tickSize / 2, yPos);
+                        context.stroke();
+                        context.fillText(unit, this.centerX + this.tickSize / 2 + 10 , yPos);
+                        unit += this.unitsPerTick;
+                        unit = Math.round(unit * 10000) / 10000;
+                        yPos = Math.round(yPos - yPosIncrement);
+                    }
+                    // draw bottom tick marks
+                    yPos = this.centerY + yPosIncrement;
+                    unit = -1 * this.unitsPerTick;
+                    while(yPos < this.canvas.height) {
+                        context.moveTo(this.centerX - this.tickSize / 2, yPos);
+                        context.lineTo(this.centerX + this.tickSize / 2, yPos);
+                        context.stroke();
+                        context.fillText(unit, this.centerX + this.tickSize / 2 + 10, yPos);
+                        unit -= this.unitsPerTick;
+                        unit = Math.round(unit * 10000) / 10000;
+                        yPos = Math.round(yPos + yPosIncrement);
+                    }
+                    context.restore();
+                };
+                Graph.prototype.drawEquation = function (equation, color, thickness) {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    context.beginPath();
+                    context.moveTo(this.minX, equation(this.minX));
+                    for(var x = this.minX + this.iteration; x <= this.maxX; x += this.iteration) {
+                        context.lineTo(x, equation(x));
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = thickness;
+                    context.strokeStyle = color;
+                    context.stroke();
+                };
+                Graph.prototype.transformContext = function () {
+                    var context = this.context;
+                    // move context to center of canvas
+                    this.context.translate(this.centerX, this.centerY);
+                    /*
+                     * stretch grid to fit the canvas window, and
+                     * invert the y scale so that that increments
+                     * as you move upwards
+                     */
+                    context.scale(this.scaleX, -this.scaleY);
+                };
+                Graph.prototype.drawXt = function () {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    // do graph for points
+                    context.beginPath();
+                    // qty coordinates
+                    var qty_crdnts = 0;
+                    if(xs_arr.length == ys_arr.length) {
+                        qty_crdnts = xs_arr.length;
+                        alert("If exists line to point (0,0) then check for a blanck row in text areas with coordinates!");
+                    } else {
+                        alert("Somthing you have inserted, my friend, but don't coordinates!");
+                    }
+                    context.moveTo(xs_arr[0], ys_arr[0]);
+                    context.arc(xs_arr[0], ys_arr[0], 0.002, 0, 2 * Math.PI, true);
+                    context.moveTo(xs_arr[0], ys_arr[0]);
+                    for(var i = 1; i < qty_crdnts; i++) {
+                        context.lineTo(xs_arr[i], ys_arr[i]);
+                        context.moveTo(xs_arr[i], ys_arr[i]);
+                        context.arc(xs_arr[i], ys_arr[i], 0.002, 0, 2 * Math.PI, true);
+                        context.moveTo(xs_arr[i], ys_arr[i]);
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'black';
+                    context.stroke();
+                };
+                Graph.prototype.drawF0 = function () {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    // do graph for points
+                    context.beginPath();
+                    // qty coordinates
+                    var qty_crdnts = 0;
+                    if(xs_arr.length == ys_arr.length) {
+                        qty_crdnts = xs_arr.length;
+                        //				alert("If exists line to point (0,0) then check for a blanck row in text areas with coordinates!");
+                    } else {
+                        alert("Somthing you have inserted, my friend, but don't coordinates!");
+                    }
+
+                    var t0 = document.forms["points"].elements["n0t0"].value;
+					var f0 = document.forms["points"].elements["n0f0"].value;
+					
+                    var ys_res = [];
+                    var y0 = f0;
+					
+                    context.moveTo(xs_arr[0], y0);
+                    context.arc(xs_arr[0], y0, 0.002, 0, 2 * Math.PI, true);
+                    context.moveTo(xs_arr[0], y0);
+					ys_res[0] = y0;
+
+                    for(var i = 1; i < qty_crdnts; i++) {
+                        var yi = f0;
+						ys_res[i] = yi;
+                        context.lineTo(xs_arr[i], yi);
+                        context.moveTo(xs_arr[i], yi);
+                        context.arc(xs_arr[i], yi, 0.002, 0, 2 * Math.PI, true);
+                        context.moveTo(xs_arr[i], yi);
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'red';
+                    context.stroke();
+					var str = "<br /><h3>n=0</h3>";					
+                    for(var i = 0; i < qty_crdnts; i++) {
+                        //ys_res[i] = '\n' + ys_res[i];
+						str += ys_res[i] + "<br />";
+                    }
+//                    alert("Y для n=0\n" + ys_res);
+					document.getElementById("n0").innerHTML = str;						
+                };
+                Graph.prototype.drawF1 = function () {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    // do graph for points
+                    context.beginPath();
+                    // qty coordinates
+                    var qty_crdnts = 0;
+                    if(xs_arr.length == ys_arr.length) {
+                        qty_crdnts = xs_arr.length;
+                        //				alert("If exists line to point (0,0) then check for a blanck row in text areas with coordinates!");
+                    } else {
+                        alert("Somthing you have inserted, my friend, but don't coordinates!");
+                    }
+					
+					
+					var t0 = document.forms["points"].elements["n1t0"].value;
+					var t1 = document.forms["points"].elements["n1t1"].value;
+					var f0 = document.forms["points"].elements["n1f0"].value;
+					var f1 = document.forms["points"].elements["n1f1"].value;
+					
+                    var ys_res = [];
+                    var y0 =
+                        f0 * ((xs_arr[0] - t1) / (t0 - t1)) +
+                        f1 * ((xs_arr[0] - t0) / (t1 - t0));
+                    context.moveTo(xs_arr[0], y0);
+                    context.arc(xs_arr[0], y0, 0.002, 0, 2 * Math.PI, true);
+                    context.moveTo(xs_arr[0], y0);
+                    ys_res[0] = y0;
+                    for(var i = 1; i < qty_crdnts; i++) {
+                        var yi =
+							f0 * ((xs_arr[i] - t1) / (t0 - t1)) +
+							f1 * ((xs_arr[i] - t0) / (t1 - t0));
+                        context.lineTo(xs_arr[i], yi);
+                        context.moveTo(xs_arr[i], yi);
+                        context.arc(xs_arr[i], yi, 0.002, 0, 2 * Math.PI, true);
+                        context.moveTo(xs_arr[i], yi);
+                        ys_res[i] = yi;
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'blue';
+                    context.stroke();
+					var str = "<br /><h3>n=1</h3>";					
+                    for(var i = 0; i < qty_crdnts; i++) {
+                        ys_res[i] = '\n' + ys_res[i];
+						str += ys_res[i] + "<br />";
+                    }
+//                    alert("Y для n=1\n" + ys_res);
+					document.getElementById("n1").innerHTML = str;						
+                };
+                Graph.prototype.drawF2 = function () {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    // do graph for points
+                    context.beginPath();
+                    // qty coordinates
+                    var qty_crdnts = 0;
+                    if(xs_arr.length == ys_arr.length) {
+                        qty_crdnts = xs_arr.length;
+                        //				alert("If exists line to point (0,0) then check for a blanck row in text areas with coordinates!");
+                    } else {
+                        alert("Somthing you have inserted, my friend, but don't coordinates!");
+                    }
+
+					var t0 = document.forms["points"].elements["n2t0"].value;
+					var t1 = document.forms["points"].elements["n2t1"].value;
+					var t2 = document.forms["points"].elements["n2t2"].value;
+					var f0 = document.forms["points"].elements["n2f0"].value;
+					var f1 = document.forms["points"].elements["n2f1"].value;
+					var f2 = document.forms["points"].elements["n2f2"].value;
+
+                    var ys_res = [];
+                    var y0 =
+                        f0 * (((xs_arr[0] - t1) * (xs_arr[0] - t2)) /
+                            ((t0 - t1) * (t0 - t2))) +
+                        f1 * (((xs_arr[0] - t0) * (xs_arr[0] - t2)) /
+                            ((t1 - t0) * (t1 - t2))) +
+                        f2 * (((xs_arr[0] - t0) * (xs_arr[0] - t1)) /
+                            ((t2 - t0) * (t2 - t1)));
+                    context.arc(xs_arr[0], y0, 0.002, 0, 2 * Math.PI, true);
+                    context.moveTo(xs_arr[0], y0);
+                    ys_res[0] = y0;
+                    for(var i = 1; i < qty_crdnts; i++) {
+                        var yi =
+                            f0 * (((xs_arr[i] - t1) * (xs_arr[i] - t2)) /
+                                ((t0 - t1) * (t0 - t2))) +
+                            f1 * (((xs_arr[i] - t0) * (xs_arr[i] - t2)) /
+                                ((t1 - t0) * (t1 - t2))) +
+                            f2 * (((xs_arr[i] - t0) * (xs_arr[i] - t1)) /
+                                ((t2 - t0) * (t2 - t1)));
+                        context.lineTo(xs_arr[i], yi);
+                        context.moveTo(xs_arr[i], yi);
+                        context.arc(xs_arr[i], yi, 0.002, 0, 2 * Math.PI, true);
+                        context.moveTo(xs_arr[i], yi);
+                        ys_res[i] = yi;
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'green';
+                    context.stroke();
+					var str = "<br /><h3>n=2</h3><br />";
+                    for(var i = 0; i < qty_crdnts; i++) {
+                        ys_res[i] = '\n' + ys_res[i];
+						str += ys_res[i] + "<br />";
+                    }
+//                    alert("Y для n=2\n" + ys_res);
+					document.getElementById("n2").innerHTML = str;					
+                };
+                Graph.prototype.drawF3 = function () {
+                    var context = this.context;
+                    context.save();
+                    this.transformContext();
+                    // do graph for points
+                    context.beginPath();
+                    // qty coordinates
+                    var qty_crdnts = 0;
+                    if(xs_arr.length == ys_arr.length) {
+                        qty_crdnts = xs_arr.length;
+                        //				alert("If exists line to point (0,0) then check for a blanck row in text areas with coordinates!");
+                    } else {
+                        alert("Somthing you have inserted, my friend, but don't coordinates!");
+                    }
+
+					var t0 = document.forms["points"].elements["n3t0"].value;
+					var t1 = document.forms["points"].elements["n3t1"].value;
+					var t2 = document.forms["points"].elements["n3t2"].value;					
+					var t3 = document.forms["points"].elements["n3t3"].value;										
+					
+					var f0 = document.forms["points"].elements["n3f0"].value;
+					var f1 = document.forms["points"].elements["n3f1"].value;
+					var f2 = document.forms["points"].elements["n3f2"].value;
+					var f3 = document.forms["points"].elements["n3f3"].value;					
+
+                    var ys_res = [];
+                    var y0 =
+                        f0 *
+                        (((xs_arr[0] - t1) * (xs_arr[0] - t2) * (xs_arr[0] - t3)) /
+                        ((t0 - t1) * (t0 - t2) * (t0 - t3))) +
+                        f1 *
+                        (((xs_arr[0] - t0) * (xs_arr[0] - t2) * (xs_arr[0] - t3)) /
+                        ((t1 - t0) * (t1 - t2) * (t1 - t3))) +
+                        f2 *
+                        (((xs_arr[0] - t0) * (xs_arr[0] - t1) * (xs_arr[0] - t3)) /
+                        ((t2 - t0) * (t2 - t1) * (t2 - t3))) +
+                        f3 *
+                        (((xs_arr[0] - t0) * (xs_arr[0] - t1) * (xs_arr[0] - t2)) /
+                        ((t3 - t0) * (t3 - t1) * (t3 - t2)));
+                    context.moveTo(xs_arr[0], y0);
+                    context.arc(xs_arr[0], y0, 0.002, 0, 2 * Math.PI, true);
+                    context.moveTo(xs_arr[0], y0);
+                    ys_res[0] = y0;
+                    for(var i = 1; i < qty_crdnts; i++) {
+                        var yi =
+                            f0 *
+                            (((xs_arr[i] - t1) * (xs_arr[i] - t2) * (xs_arr[i] - t3)) /
+                            ((t0 - t1) * (t0 - t2) * (t0 - t3))) +
+                            f1 *
+                            (((xs_arr[i] - t0) * (xs_arr[i] - t2) * (xs_arr[i] - t3)) /
+                            ((t1 - t0) * (t1 - t2) * (t1 - t3))) +
+                            f2 *
+                            (((xs_arr[i] - t0) * (xs_arr[i] - t1) * (xs_arr[i] - t3)) /
+                            ((t2 - t0) * (t2 - t1) * (t2 - t3))) +
+                            f3 *
+                            (((xs_arr[i] - t0) * (xs_arr[i] - t1) * (xs_arr[i] - t2)) /
+                            ((t3 - t0) * (t3 - t1) * (t3 - t2)));
+                        context.lineTo(xs_arr[i], yi);
+                        context.moveTo(xs_arr[i], yi);
+                        context.arc(xs_arr[i], yi, 0.002, 0, 2 * Math.PI, true);
+                        context.moveTo(xs_arr[i], yi);
+                        ys_res[i] = yi;
+                    }
+                    context.restore();
+                    context.lineJoin = 'round';
+                    context.lineWidth = 1.5;
+                    context.strokeStyle = 'Chocolate';
+                    context.stroke();
+					var str = "<br /><h3>n=3</h3>";
+                    for(var i = 0; i < qty_crdnts; i++) {
+                        ys_res[i] = '\n' + ys_res[i];
+						str += ys_res[i] + "<br />";
+                    }
+//                    alert("Y для n=3\n" + ys_res);
+					document.getElementById("n3").innerHTML = str;
+                };
+                var myGraph = new Graph('myCanvas', x_min, y_min, x_max, y_max, t);
+                myGraph.drawXt();
+                myGraph.drawF0();
+                myGraph.drawF1();
+                myGraph.drawF2();
+                myGraph.drawF3();
+            }
+        </script>
+    </div>
+</body>
+
+</html>
