@@ -1,41 +1,45 @@
-<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Experimentation by kirillin</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="stylesheets/styles.css">
+	<script type="text/javascript" src="javascripts/api_words.js" ></script>
+</head>
+<body>
+<div>
+	<ul>
+		<li>
+			<label>A: learned or raw subs</label>
+			<textarea rows="5000" id="input0"></textarea>
+		</li>
+		<li>
+			<label>B: a dump of words</label>
+			<textarea rows="5000" id="input1"></textarea>
+		</li>
+		<li>
+			<label>C: RESULT</label>
+			<textarea rows="10000" id="output"></textarea>
+		</li>
+		<li>
+			<label>D: translations for C</label>
+			<textarea rows="10000" id="output1"></textarea>
+		</li>
+		<li>
+			<label>E: Anki dic</label>
+			<textarea rows="10000" id="output2"></textarea>
+		</li>
+	</ul>
+	<button id="substract">substract B - A</button>
+	<button id="merge">merge A&B</button>
+	<hr />
+	<button id="sortB">sort B</button>
+	<button id="rmDoublesB">remove doubles from B</button>
+	<br />
+	<button id="sortC">sort C</button>
+	<button id="rmDoublesC">remove doubles from C</button>
+	<hr />
+	<button id="parseSubs">parse subs and paste to B</button>
+	<hr />
+	<button id="makeDeck">make deck for Anki</button>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Experimentation</h1>
-        <p>helpful nonsenses</p>
-
-        <p class="view"><a href="https://github.com/kirillin/experimentation">View the Project on GitHub <small>kirillin/experimentation</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/kirillin/experimentation/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/kirillin/experimentation/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/kirillin/experimentation">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p>DIFF TRASH FROM MY BRAIN</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/kirillin">kirillin</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+</div>
+</body>
 </html>
