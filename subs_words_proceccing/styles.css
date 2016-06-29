@@ -1,0 +1,20 @@
+div {
+}
+
+textarea {
+	width: 200px;
+	height: 400px;
+}
+
+#output {
+	text-align: right;
+	overflow-y: scroll;
+}
+
+ul li {
+	float:left;
+	height: 420px;
+	width: 200px;
+	list-style-type: none;
+	text-align: center;
+}
