@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>piano 3</title>
+	<meta charset='utf-8' />
+	<link rel="stylesheet" href="stylesheets/piano.css" />
+	<script src="javascripts/piano.js"></script>
+  </head>
+  <body>
+	<span id="note" ></span>
+	<ul class="garbage">
+		<li>
+			<canvas height='300' width='600' id='area'>press f5</canvas>
+			<canvas height='300' width='600' id='area2'>press f5</canvas>
+		</li>
+		<li>
+			<span>type of wave:</span>
+			<input type="radio"  name="forme" value="sine" checked onchange="formSignalSet = 'sine'">sine</input>
+			<input type="radio" name="forme" value="square" onchange="formSignalSet = 'square'">square</input>
+			<input type="radio" name="forme" value="sawtooth" onchange="formSignalSet = 'sawtooth'">sawtooth</input>
+			<input type="radio" name="forme" value="triangle" onchange="formSignalSet = 'triangle'">triangle</input>
+		</li>
+		<li>
+			<span>settings:</span>
+			<input type="text" id="decay" value="500" >-decay;</input>
+			<input type="text" id="attack" value="10" >-attack;</input>
+			<br />
+			<input type="submit" id="setparameters" value="set parameters" onclick="setParameters();"></input>
+		</li>
+
+		<hr />
+		<li>
+			<textarea id="notes_sequence" name="name" cols="100" rows="3"></textarea>
+			<li>
+				<button onclick="startSequenceEx()" >startEx</button>
+				<button onclick="startSequence()" >start</button>
+			</li>
+			<li>
+				<button onclick="stopSequenceEx()" >stopEx</button>
+				<button onclick="stopSequence()">stop</button>
+			</li>
+			<button onclick="clr()">clear</button>
+			<button onclick="addCurrentNote()">add current note</button>
+			<button onclick="addPause()">add pause</button>
+			<input type="text" id="duration" value="500" >duration;</input>
+		</li>
+	</ul>
+	<ul class="melodies">
+		<p>
+			ниже сотворенные мелодии!
+		</p>
+		<li>
+		G2#,C3#,E3,G2#,C3#,E3,G2#,C3#,E3,G2#,C3#,E3,A3,C3#,E3,A3,C3#,E3,A3,D3,G3,A3,D3,G3,G2#,C3,F3#,G2#,C3#,E3,G2#,C3#,D3#,F2#,C3,E3,E2,G2#,C3#,G2#,C3#,E3,G2#,C3#,E3,G3#,-,G3#,G3#,G2#,D3#,F3#,G2#,D3#,F3#,G2#,D3#,F3#,G2#,D3#,F3#,G3#,-,G3#,G3#,G2#,C3#,E3,G2#,C3#,E3,A4,C3#,F3#,A3,C3#,F3#,G3#,B3,E3,G2#,B3,E3,F3#,A3,B3,E3,B4,B3,D3#,E3,B3,E3,G2#,B3,E3,G2#,B3,E3,G2#,B3,E3,G2,B3,E3,G2,B3,E3,G2,B3,E3,G3,G2,B3,E3,G3,G3,B3,F3,G2,B3,F3,G2,B3,F3,G3,B3,G3,G3,C3,G2,B3,E3,G2,,C3#,E3,F3#,C3#,E3,F2#,A2#,A1#,C0#,-,C0#,-,C0#,-,C0#,-,C0#,-,-,-,-,-		
+		</li>
+		<li>
+		E4,D4#,E4,D4#,E4,D4#,E4,B4,D4,C4,A4,-,C3,E3,A4,B4,-,E3,G3#,B4,C4,-
+		</li>
+	<ul>
+  </body>
+</html>
