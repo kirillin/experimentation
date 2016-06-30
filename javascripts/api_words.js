@@ -9,37 +9,48 @@ function clear(R, delSym) {
 	return R;
 }
 
+function getQtyRows(R) {
+	return R.length;
+}
+
 function getAarray() {
-	var in0 = document.getElementById('input0');
-	var tA = in0.value;
+	var a = document.getElementById('A');
+	var tA = a.value;
 	var aA = tA.split('\n');
 
 	return clear(aA, "");
 }
 
 function getBarray() {
-	var in1 = document.getElementById('input1');
-	var tB = in1.value;	
+	var b = document.getElementById('B');
+	var tB = b.value;	
 	var aB = tB.split('\n');
 	return clear(aB, "");
 }
 
 function getCarray() {
-	var out = document.getElementById('output');
-	var tC = out.value;	
+	var c = document.getElementById('C');
+	var tC = c.value;	
 	var aC = tC.split('\n');
 	return clear(aC, "");
 }
 
 function getDarray() {
-	var out1 = document.getElementById('output1');
-	var tD = out1.value;	
+	var d = document.getElementById('D');
+	var tD = d.value;	
 	var aD = tD.split('\n');
 	return clear(aD, "");
 }
 
+function getEarray() {
+	var e = document.getElementById('E');
+	var tE = e.value;	
+	var aE = tE.split('\n');
+	return clear(aE, "");
+}
+
 function setAToPage(A) {
-	var in0 = document.getElementById('input0');
+	var in0 = document.getElementById('A');
 	in0.value = '';
 	for (var i = 0; i < A.length; i++) {
 		in0.value = in0.value + A[i] + '\n';
@@ -47,7 +58,7 @@ function setAToPage(A) {
 }
 
 function setBToPage(B) {
-	var in1 = document.getElementById('input1');
+	var in1 = document.getElementById('B');
 	in1.value = '';
 	for (var i = 0; i < B.length; i++) {
 		in1.value = in1.value + B[i] + '\n';
@@ -55,7 +66,7 @@ function setBToPage(B) {
 }
 
 function setCToPage(C) {
-	var out = document.getElementById('output');
+	var out = document.getElementById('C');
 	out.value = '';
 	for (var i = 0; i < C.length; i++) {
 		out.value = out.value + C[i] + '\n';
@@ -63,7 +74,7 @@ function setCToPage(C) {
 }
 
 function setEToPage(E) {
-	var out2 = document.getElementById('output2');
+	var out2 = document.getElementById('E');
 	out2.value = '';
 	for (var i = 0; i < E.length; i++) {
 		out2.value = out2.value + E[i] + '\n';
@@ -192,7 +203,7 @@ function rmDoublesC() {
 }
 
 function parseSubs() {
-	var in0 = document.getElementById('input0');
+	var in0 = document.getElementById('A');
 	var tA = in0.value;
 	//.test(tA)
 	var re = new RegExp("[a-z']+","gim");
@@ -222,16 +233,51 @@ function makeDeck() {
 
 
 function scrolingCD() {
-	var out = document.getElementById('output');
-	var out1 = document.getElementById('output1');
+	var out = document.getElementById('C');
+	var out1 = document.getElementById('D');
 	out1.scrollTop = out.scrollTop;
 }
 function scrolingDC() {
-	var out = document.getElementById('output');
-	var out1 = document.getElementById('output1');
+	var out = document.getElementById('C');
+	var out1 = document.getElementById('D');
 	out.scrollTop = out1.scrollTop;
 }
 
+function getQtyRowsA() {
+	var A = getAarray();
+	var sp = document.getElementsByTagName('span')[0];
+	sp.innerText = A.length;
+}
+function getQtyRowsB() {
+	var B = getBarray();
+	var sp = document.getElementsByTagName('span')[1];
+	sp.innerText = B.length;
+}
+function getQtyRowsC() {
+	var C = getCarray();
+	var sp = document.getElementsByTagName('span')[2];
+	sp.innerText = C.length;
+}
+function getQtyRowsD() {
+	var D = getDarray();
+	var sp = document.getElementsByTagName('span')[3];
+	sp.innerText = D.length;
+}
+function getQtyRowsE() {
+	var E = getEarray();
+	var sp = document.getElementsByTagName('span')[4];
+	sp.innerText = E.length;
+}
+
+function updateFields() {
+	getQtyRowsA();
+	getQtyRowsB();
+	getQtyRowsC();
+	getQtyRowsD();
+	getQtyRowsE();
+}
+
+window.addEventListener("click", updateFields);
 window.onload = function() {
 	var butSub = document.getElementById('substract');
 	var butMerge = document.getElementById('merge');
@@ -243,10 +289,23 @@ window.onload = function() {
 	var butRmDoublesC = document.getElementById('rmDoublesC');
 	var butParseSubs = document.getElementById('parseSubs');
 	var butMakeDeck = document.getElementById('makeDeck');
+	var A = document.getElementById('A');
+	var B = document.getElementById('B');
+	var C = document.getElementById('C');
+	var D = document.getElementById('D');
+	var E = document.getElementById('E');
+	A.addEventListener('keypress', getQtyRowsA);
+	B.addEventListener('keypress', getQtyRowsB);
+	C.addEventListener('keypress', getQtyRowsC);
+	D.addEventListener('keypress', getQtyRowsD);
+	E.addEventListener('keypress', getQtyRowsE);
 
-	var out = document.getElementById('output');
+
+
+
+	var out = document.getElementById('C');
 	out.addEventListener('scroll', scrolingCD);
-	var out1 = document.getElementById('output1');
+	var out1 = document.getElementById('D');
 	out1.addEventListener('scroll', scrolingDC);
 
 	butSub.addEventListener('click', doSubstract);
