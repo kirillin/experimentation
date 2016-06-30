@@ -38,12 +38,11 @@ function getDarray() {
 	return clear(aD, "");
 }
 
-
-function setCToPage(C) {
-	var out = document.getElementById('output');
-	out.value = '';
-	for (var i = 0; i < C.length; i++) {
-		out.value = out.value + C[i] + '\n';
+function setAToPage(A) {
+	var in0 = document.getElementById('input0');
+	in0.value = '';
+	for (var i = 0; i < A.length; i++) {
+		in0.value = in0.value + A[i] + '\n';
 	}
 }
 
@@ -52,6 +51,14 @@ function setBToPage(B) {
 	in1.value = '';
 	for (var i = 0; i < B.length; i++) {
 		in1.value = in1.value + B[i] + '\n';
+	}
+}
+
+function setCToPage(C) {
+	var out = document.getElementById('output');
+	out.value = '';
+	for (var i = 0; i < C.length; i++) {
+		out.value = out.value + C[i] + '\n';
 	}
 }
 
@@ -148,6 +155,12 @@ function doMerge() {
 	console.log("doMerge - complete!");
 }
 
+function doSortA() {
+	var A = getAarray();
+	A.sort();
+	setAToPage(A);
+}
+
 function doSortB() {
 	var B = getBarray();
 	B.sort();
@@ -158,6 +171,12 @@ function doSortC() {
 	var C = getCarray();
 	C.sort();
 	setCToPage(C);
+}
+
+function rmDoublesA() {
+	var A = getAarray();
+	A = rmDoubles(A);
+	setAToPage(A);
 }
 
 function rmDoublesB() {
@@ -216,8 +235,10 @@ function scrolingDC() {
 window.onload = function() {
 	var butSub = document.getElementById('substract');
 	var butMerge = document.getElementById('merge');
+	var butSortA = document.getElementById('sortA');
 	var butSortB = document.getElementById('sortB');
 	var butSortC = document.getElementById('sortC');
+	var butRmDoublesA = document.getElementById('rmDoublesA');	
 	var butRmDoublesB = document.getElementById('rmDoublesB');
 	var butRmDoublesC = document.getElementById('rmDoublesC');
 	var butParseSubs = document.getElementById('parseSubs');
@@ -230,8 +251,10 @@ window.onload = function() {
 
 	butSub.addEventListener('click', doSubstract);
 	butMerge.addEventListener('click', doMerge);
+	butSortA.addEventListener('click', doSortA);
 	butSortB.addEventListener('click', doSortB);
 	butSortC.addEventListener('click', doSortC);
+	butRmDoublesA.addEventListener('click', rmDoublesA);	
 	butRmDoublesB.addEventListener('click', rmDoublesB);
 	butRmDoublesC.addEventListener('click', rmDoublesC);
 	butParseSubs.addEventListener('click', parseSubs);
