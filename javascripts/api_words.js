@@ -49,6 +49,15 @@ function getEarray() {
 	return clear(aE, "");
 }
 
+function getIarray() {
+	var i = document.getElementById('I');
+	var tI = i.value;	
+	var aI = tI.split('\n');
+	return clear(aI, "");
+
+ }
+
+
 function setAToPage(A) {
 	var in0 = document.getElementById('A');
 	in0.value = '';
@@ -73,12 +82,29 @@ function setCToPage(C) {
 	}
 }
 
+function setDToPage(D) {
+	var d = document.getElementById('D');
+	d.value = '';
+	for (var i = 0; i < D.length; i++) {
+		d.value = d.value + D[i] + '\n';
+	}
+}
+
 function setEToPage(E) {
 	var out2 = document.getElementById('E');
 	out2.value = '';
 	for (var i = 0; i < E.length; i++) {
 		out2.value = out2.value + E[i] + '\n';
 	}
+}
+
+function setIToPage(I) {
+	var ii = document.getElementById('I');
+	ii.value = '';
+	for (var i = 0; i < I.length; i++) {
+		ii.value = ii.value + I[i] + '\n';
+	}
+
 }
 
 
@@ -231,6 +257,63 @@ function makeDeck() {
 	setEToPage(E);
 }
 
+function makeDeckEx() {
+	var C = getCarray();
+	var D = getDarray();
+	var I = getIarray(); // images
+	var E = new Array();
+	if (C.length == D.length) {
+		for (var i = 0; i < C.length; i++) {
+			// TODO
+			//'12-34-56'.replace( /-/g, ":" ) )  // 12:34:56
+			var front = C[i].trim();
+			var back = D[i].trim();
+			var img = "<img src='" + I[i].trim() + "'></img>";
+			var translate = "<a href='http://www.multitran.ru/c/m.exe?l1=1&amp;l2=2&amp;s=$&'>view translate on multitran</a>";
+			var usage = "<a href='http://www.multitran.ru/c/m.exe?l1=1&amp;l2=2&amp;s=$&'>usage examples</a>";
+			var endl = "<br />";
+			translate = front.replace(front, translate);
+			usage = front.replace(front, usage);
+			E[i] = front + endl + img + translate + usage + "\t" + back;
+		}
+	} else {
+		alert("problem whith C, D or I. Dfferent length!");
+	}
+	setEToPage(E);
+}
+function parseDeck() {
+	var E = getEarray();
+	var frontTabBack;
+	var C = new Array();
+	var D = new Array();
+	for (var i = 0; i < E.length; i++) {
+		frontTabBack = E[i].split(/;/);
+		C[i] = frontTabBack[0];
+		D[i] = frontTabBack[1];
+	}
+	setCToPage(C);
+	setDToPage(D);
+}
+
+function parseDeckEx() {
+	var E = getEarray();
+	var frontTabBack;
+	var C = new Array();
+	var D = new Array();
+	var I = new Array();
+	for (var i = 0; i < E.length; i++) {
+		frontTabBack = E[i].split(/\t/);
+		var reC = new RegExp("[a-z']+","im");
+		C[i] = frontTabBack[0].match(reC);
+		//var reI = new RegExp("http[s]?://(.+jpg|png|gif)","im");
+		var reI = new RegExp("((http[s]?://.+)(png|jpg|gif))","im");
+		I[i] = frontTabBack[0].match(reI)[0];
+		D[i] = frontTabBack[1];
+	}
+	setCToPage(C);
+	setDToPage(D);
+	setIToPage(I);
+}
 
 function scrolingCD() {
 	var out = document.getElementById('C');
@@ -263,9 +346,14 @@ function getQtyRowsD() {
 	var sp = document.getElementsByTagName('span')[3];
 	sp.innerText = D.length;
 }
+function getQtyRowsI() {
+	var I = getIarray();
+	var sp = document.getElementsByTagName('span')[4];
+	sp.innerText = I.length;
+}
 function getQtyRowsE() {
 	var E = getEarray();
-	var sp = document.getElementsByTagName('span')[4];
+	var sp = document.getElementsByTagName('span')[5];
 	sp.innerText = E.length;
 }
 
@@ -274,7 +362,15 @@ function updateFields() {
 	getQtyRowsB();
 	getQtyRowsC();
 	getQtyRowsD();
+	getQtyRowsI();
 	getQtyRowsE();
+}
+
+function magnetScrollLeft() {
+	var se = document.getElementById('E');
+	var si = document.getElementById('I');
+	se.scrollLeft = 0;
+	si.scrollLeft = 0;
 }
 
 window.addEventListener("click", updateFields);
@@ -289,20 +385,29 @@ window.onload = function() {
 	var butRmDoublesC = document.getElementById('rmDoublesC');
 	var butParseSubs = document.getElementById('parseSubs');
 	var butMakeDeck = document.getElementById('makeDeck');
+	var butMakeDeckEx = document.getElementById('makeDeckEx');
+	var butParseDeck = document.getElementById('parseDeck');
+	var butParseDeckEx = document.getElementById('parseDeckEx');
+
 	var A = document.getElementById('A');
 	var B = document.getElementById('B');
 	var C = document.getElementById('C');
 	var D = document.getElementById('D');
+	var I = document.getElementById('I');
 	var E = document.getElementById('E');
 	A.addEventListener('keypress', getQtyRowsA);
 	B.addEventListener('keypress', getQtyRowsB);
 	C.addEventListener('keypress', getQtyRowsC);
 	D.addEventListener('keypress', getQtyRowsD);
+	I.addEventListener('keypress', getQtyRowsI);
 	E.addEventListener('keypress', getQtyRowsE);
 
 
 
-
+	var se = document.getElementById('E');
+	se.addEventListener('mouseup',magnetScrollLeft);
+	var si = document.getElementById('I');
+	si.addEventListener('mouseup',magnetScrollLeft);
 	var out = document.getElementById('C');
 	out.addEventListener('scroll', scrolingCD);
 	var out1 = document.getElementById('D');
@@ -318,4 +423,7 @@ window.onload = function() {
 	butRmDoublesC.addEventListener('click', rmDoublesC);
 	butParseSubs.addEventListener('click', parseSubs);
 	butMakeDeck.addEventListener('click', makeDeck);
+	butMakeDeckEx.addEventListener('click', makeDeckEx);
+	butParseDeck.addEventListener('click', parseDeck);
+	butParseDeckEx.addEventListener('click', parseDeckEx);
 }

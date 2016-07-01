@@ -28,7 +28,12 @@
 		<li>
 		</li>
 		<li>
-			<button class="E" id="makeDeck">make deck for Anki</button>		
+		</li>		
+		<li>
+			<button class="E" id="makeDeck">make deck for Anki</button>
+			<button class="E" id="makeDeckEx">make deck with imgs</button>
+			<button class="E" id="parseDeck">parse deck without imgs</button>
+			<button class="E" id="parseDeckEx">parse deck with imgs</button>
 		</li>
 	</ul>
 	<ul>
@@ -53,8 +58,13 @@
 			<span class="D"></span>
 		</li>
 		<li>
+			<label class="I" >I: imgs</label>
+			<textarea wrap="off" class="I" rows="10000" id="I"></textarea>
+			<span class="I"></span>
+		</li>		
+		<li>
 			<label class="E" >E: Anki dic</label>
-			<textarea class="E" rows="10000" id="E"></textarea>
+			<textarea wrap="off" class="E" rows="10000" id="E"></textarea>
 			<span class="E"></span>
 		</li>
 	</ul>
