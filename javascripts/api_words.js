@@ -232,7 +232,7 @@ function parseSubs() {
 	var in0 = document.getElementById('A');
 	var tA = in0.value;
 	//.test(tA)
-	var re = new RegExp("[a-z']+","gim");
+	var re = new RegExp("[a-z]+","gim");
 	var array;
 	if (re.test(tA)) {
 		array = tA.match(re);
@@ -274,7 +274,10 @@ function makeDeckEx() {
 			var endl = "<br />";
 			translate = front.replace(front, translate);
 			usage = front.replace(front, usage);
-			E[i] = front + endl + img + translate + usage + "\t" + back;
+			E[i] = front + endl + 
+			img + endl + 
+			translate + endl + 
+			usage + "\t" + back;
 		}
 	} else {
 		alert("problem whith C, D or I. Dfferent length!");
@@ -303,7 +306,7 @@ function parseDeckEx() {
 	var I = new Array();
 	for (var i = 0; i < E.length; i++) {
 		frontTabBack = E[i].split(/\t/);
-		var reC = new RegExp("[a-z']+","im");
+		var reC = new RegExp("[a-z' ]+","im");
 		C[i] = frontTabBack[0].match(reC);
 		//var reI = new RegExp("http[s]?://(.+jpg|png|gif)","im");
 		var reI = new RegExp("((http[s]?://.+)(png|jpg|gif))","im");
