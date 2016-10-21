@@ -1,0 +1,124 @@
+###############################################################################
+#                                                                             #
+#                                                       06/Mar/2010  23:59:10 #
+# IAR Atmel AVR C/C++ Compiler V5.11A/W32, Evaluation Version                 #
+# Copyright 1996-2008 IAR Systems. All rights reserved.                       #
+#                                                                             #
+#    Source file  =  D:\AVR_PROJ_ALL\IAR\Keyboard\usart.c                     #
+#    Command line =  D:\AVR_PROJ_ALL\IAR\Keyboard\usart.c --cpu=m8 -ms -o     #
+#                    D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\Obj\ -lCN             #
+#                    D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\List\                 #
+#                    --initializers_in_flash -z2 --no_cse --no_inline         #
+#                    --no_code_motion --no_cross_call --no_clustering         #
+#                    --no_tbaa --debug -DENABLE_BIT_DEFINITIONS -e -I         #
+#                    "C:\Program Files\IAR Systems\Embedded Workbench 5.0     #
+#                    Evaluation\avr\INC\" -I "C:\Program Files\IAR            #
+#                    Systems\Embedded Workbench 5.0                           #
+#                    Evaluation\avr\INC\CLIB\" --eeprom_size 512              #
+#    List file    =  D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\List\usart.lst        #
+#    Object file  =  D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\Obj\usart.r90         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+D:\AVR_PROJ_ALL\IAR\Keyboard\usart.c
+      1          #include "usart.h"
+
+   \                                 In  segment ABSOLUTE, at 0x29
+   \   <unnamed> volatile __io _A_UBRRL
+   \                     _A_UBRRL:
+   \   00000000                      DS 1
+
+   \                                 In  segment ABSOLUTE, at 0x2a
+   \   <unnamed> volatile __io _A_UCSRB
+   \                     _A_UCSRB:
+   \   00000000                      DS 1
+
+   \                                 In  segment ABSOLUTE, at 0x2b
+   \   <unnamed> volatile __io _A_UCSRA
+   \                     _A_UCSRA:
+   \   00000000                      DS 1
+
+   \                                 In  segment ABSOLUTE, at 0x2c
+   \   <unnamed> volatile __io _A_UDR
+   \                     _A_UDR:
+   \   00000000                      DS 1
+
+   \                                 In  segment ABSOLUTE, at 0x40
+   \   <unnamed> volatile __io _A_UBRRH
+   \                     _A_UBRRH:
+   \   00000000                      DS 1
+      2          #include <intrinsics.h>
+      3          
+      4          //инициализация usart`a
+
+   \                                 In  segment CODE, align 2, keep-with-next
+      5          void USART_Init(void)
+   \                     USART_Init:
+      6          {
+      7            UBRRH = 0;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   BD00               OUT     0x20, R16
+      8            UBRRL = 51; //скорость обмена 9600 бод
+   \   00000004   E303               LDI     R16, 51
+   \   00000006   B909               OUT     0x09, R16
+      9            UCSRB = (1<<TXEN); // разр передачи.
+   \   00000008   E008               LDI     R16, 8
+   \   0000000A   B90A               OUT     0x0A, R16
+     10            UCSRC = (1<<URSEL)|(1<<UCSZ1)|(1<<UCSZ0); //размер слова 8 разрядов
+   \   0000000C   E806               LDI     R16, 134
+   \   0000000E   BD00               OUT     0x20, R16
+     11          }
+   \   00000010   9508               RET
+   \   00000012                      REQUIRE _A_UBRRL
+   \   00000012                      REQUIRE _A_UCSRB
+   \   00000012                      REQUIRE _A_UBRRH
+     12          
+     13          //отправка символа по usart`у
+
+   \                                 In  segment CODE, align 2, keep-with-next
+     14          void USART_SendChar(unsigned char sym)
+   \                     USART_SendChar:
+   \                     ??USART_SendChar_0:
+     15          {
+     16            while(!(UCSRA & (1<<UDRE)));
+   \   00000000   9B5D               SBIS    0x0B, 0x05
+   \   00000002   CFFE               RJMP    ??USART_SendChar_0
+     17            UDR = sym;
+   \   00000004   B90C               OUT     0x0C, R16
+     18          }
+   \   00000006   9508               RET
+   \   00000008                      REQUIRE _A_UCSRA
+   \   00000008                      REQUIRE _A_UDR
+     19          
+     20          
+
+   Maximum stack usage in bytes:
+
+     Function       CSTACK RSTACK
+     --------       ------ ------
+     USART_Init         0      2
+     USART_SendChar     0      2
+
+
+   Segment part sizes:
+
+     Function/Label     Bytes
+     --------------     -----
+     _A_UBRRL              1
+     _A_UCSRB              1
+     _A_UCSRA              1
+     _A_UDR                1
+     _A_UBRRH              1
+     USART_Init           18
+     ??USART_SendChar_0    8
+
+ 
+  5 bytes in segment ABSOLUTE
+ 26 bytes in segment CODE
+ 
+ 26 bytes of CODE memory
+  0 bytes of DATA memory (+ 5 bytes shared)
+
+Errors: none
+Warnings: none

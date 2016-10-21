@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>4179558842</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$PROJ_DIR$\keyboard.c</file>
+      <file>$TOOLKIT_DIR$\inc\ioavr.h</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\keyboard.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\kk.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\iom8.h</file>
+      <file>$PROJ_DIR$\klava\kk.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\keyboard.r90</file>
+      <file>$PROJ_DIR$\keyboard.h</file>
+      <file>$PROJ_DIR$\Debug\List\kk.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\kk.r90</file>
+      <file>$TOOLKIT_DIR$\inc\bitdefinitions\iom8.inc</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r90</file>
+      <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
+      <file>$PROJ_DIR$\Debug\List\keyboard.lst</file>
+      <file>$TOOLKIT_DIR$\src\template\cfgm8.xcl</file>
+      <file>$PROJ_DIR$\Debug\List\main.lst</file>
+      <file>$PROJ_DIR$\Debug\Exe\ind.hex</file>
+      <file>$PROJ_DIR$\Debug\Obj\ind.pbd</file>
+      <file>$PROJ_DIR$\klava\kk.c</file>
+      <file>$TOOLKIT_DIR$\lib\clib\cl1t-ec_mul.r90</file>
+      <file>$TOOLKIT_DIR$\src\template\cfg1toim.xcl</file>
+      <file>$PROJ_DIR$\Debug\List\indicator.lst</file>
+      <file>$PROJ_DIR$\indicator.h</file>
+      <file>$PROJ_DIR$\indicator.c</file>
+      <file>$PROJ_DIR$\main1.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\indicator.r90</file>
+      <file>$PROJ_DIR$\Debug\Obj\indicator.pbi</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\keyboard.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 16 8</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 9 1 6 15 12 4</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 9 1 6 15 12 4</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 18 14</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 13</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 1 6 15 12 4 25</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 1 6 15 12 4 25</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\ind.hex</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 17 23 28 8 14 22</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\ind.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 29 3 13</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\klava\kk.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 10 11</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 5</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 7</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 7</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 19</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\indicator.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 24 28</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 29</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 25 1 6 15 12</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 25 1 6 15 12</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

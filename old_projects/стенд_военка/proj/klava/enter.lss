@@ -1,0 +1,482 @@
+
+enter.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000020c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .bss          00000002  00800060  00800060  00000280  2**0
+                  ALLOC
+  2 .debug_aranges 00000060  00000000  00000000  00000280  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_pubnames 000000c7  00000000  00000000  000002e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000677  00000000  00000000  000003a7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 000002a6  00000000  00000000  00000a1e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   0000053f  00000000  00000000  00000cc4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  000000c0  00000000  00000000  00001204  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    0000014c  00000000  00000000  000012c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    000001ed  00000000  00000000  00001410  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a2 36       	cpi	r26, 0x62	; 98
+  3e:	b1 07       	cpc	r27, r17
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	02 d0       	rcall	.+4      	; 0x48 <main>
+  44:	e1 c0       	rjmp	.+450    	; 0x208 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <main>:
+
+unsigned char klav_pr, klav;//значение клавиатуры прошлое и настоящее
+
+int main (void)
+{
+    lcd_init();//инициализация ЖКИ
+  48:	8e d0       	rcall	.+284    	; 0x166 <lcd_init>
+	init_klav();//инициализация клавиатуры
+  4a:	10 d0       	rcall	.+32     	; 0x6c <init_klav>
+
+	for(;;)//в бесконечном цикле
+	{
+            skan_klav ();//сканируем клавиатуру
+  4c:	1e d0       	rcall	.+60     	; 0x8a <skan_klav>
+		    if(klav_pr != klav)//если состояние изменилось
+  4e:	90 91 60 00 	lds	r25, 0x0060
+  52:	80 91 61 00 	lds	r24, 0x0061
+  56:	89 17       	cp	r24, r25
+  58:	21 f0       	breq	.+8      	; 0x62 <main+0x1a>
+            {
+			    if(klav != 0) lcd_dat(klav);//и если кнопки не нажаты, то выводим символ на ЖКИ
+  5a:	99 23       	and	r25, r25
+  5c:	11 f0       	breq	.+4      	; 0x62 <main+0x1a>
+  5e:	89 2f       	mov	r24, r25
+  60:	7d d0       	rcall	.+250    	; 0x15c <lcd_dat>
+			}
+			klav_pr = klav;//прошлому значению клавиатуры присваиваем настоящее
+  62:	80 91 60 00 	lds	r24, 0x0060
+  66:	80 93 61 00 	sts	0x0061, r24
+  6a:	f0 cf       	rjmp	.-32     	; 0x4c <main+0x4>
+
+0000006c <init_klav>:
+#include "kk.h"
+
+void init_klav (void)
+{
+    DDR_stolb1  &= ~_BV(stolb1);
+  6c:	8e 98       	cbi	0x11, 6	; 17
+    DDR_stolb2  &= ~_BV(stolb2);
+  6e:	a2 98       	cbi	0x14, 2	; 20
+    DDR_stolb3  &= ~_BV(stolb3);
+  70:	a1 98       	cbi	0x14, 1	; 20
+    DDR_stolb4  &= ~_BV(stolb4);//столбцы -  входы
+  72:	b9 98       	cbi	0x17, 1	; 23
+    DDR_stroka1 |=  _BV(stroka1);
+  74:	b8 9a       	sbi	0x17, 0	; 23
+    DDR_stroka2 |=  _BV(stroka2);
+  76:	8f 9a       	sbi	0x11, 7	; 17
+    DDR_stroka3 |=  _BV(stroka3);
+  78:	a0 9a       	sbi	0x14, 0	; 20
+    //DDR_stroka4 |=  _BV(stroka4);//строки - выходы
+	
+	PORT_stolb1  |= _BV(stolb1);
+  7a:	96 9a       	sbi	0x12, 6	; 18
+    PORT_stolb2  |= _BV(stolb2);
+  7c:	aa 9a       	sbi	0x15, 2	; 21
+    PORT_stolb3  |= _BV(stolb3);
+  7e:	a9 9a       	sbi	0x15, 1	; 21
+    PORT_stolb4  |= _BV(stolb4);//столбцы - входы с подтягивающими резисторами
+  80:	c1 9a       	sbi	0x18, 1	; 24
+    PORT_stroka1 |= _BV(stroka1);
+  82:	c0 9a       	sbi	0x18, 0	; 24
+    PORT_stroka2 |= _BV(stroka2);
+  84:	97 9a       	sbi	0x12, 7	; 18
+    PORT_stroka3 |= _BV(stroka3);
+  86:	a8 9a       	sbi	0x15, 0	; 21
+    //PORT_stroka4 |= _BV(stroka4);//строки - выходы с лог.1
+}
+  88:	08 95       	ret
+
+0000008a <skan_klav>:
+
+ void skan_klav (void)
+{
+    klav = 0;//если не нажата ни одна клавиша значение переменной обнуляем
+  8a:	10 92 60 00 	sts	0x0060, r1
+	PORT_stroka1 &= ~_BV(stroka1);_delay_us(100);//в 1-ю строку даём 0
+  8e:	c0 98       	cbi	0x18, 0	; 24
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+  90:	81 e2       	ldi	r24, 0x21	; 33
+  92:	8a 95       	dec	r24
+  94:	f1 f7       	brne	.-4      	; 0x92 <skan_klav+0x8>
+	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav11;//если он в 1-м столбце, то нажата клавиша 11
+  96:	86 99       	sbic	0x10, 6	; 16
+  98:	02 c0       	rjmp	.+4      	; 0x9e <skan_klav+0x14>
+  9a:	81 e3       	ldi	r24, 0x31	; 49
+  9c:	0b c0       	rjmp	.+22     	; 0xb4 <skan_klav+0x2a>
+	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav12;
+  9e:	9a 99       	sbic	0x13, 2	; 19
+  a0:	02 c0       	rjmp	.+4      	; 0xa6 <skan_klav+0x1c>
+  a2:	84 e3       	ldi	r24, 0x34	; 52
+  a4:	07 c0       	rjmp	.+14     	; 0xb4 <skan_klav+0x2a>
+	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav13;
+  a6:	99 99       	sbic	0x13, 1	; 19
+  a8:	02 c0       	rjmp	.+4      	; 0xae <skan_klav+0x24>
+  aa:	87 e3       	ldi	r24, 0x37	; 55
+  ac:	03 c0       	rjmp	.+6      	; 0xb4 <skan_klav+0x2a>
+	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav14;
+  ae:	b1 99       	sbic	0x16, 1	; 22
+  b0:	03 c0       	rjmp	.+6      	; 0xb8 <skan_klav+0x2e>
+  b2:	8a e2       	ldi	r24, 0x2A	; 42
+  b4:	80 93 60 00 	sts	0x0060, r24
+	PORT_stroka1 |=  _BV(stroka1);
+  b8:	c0 9a       	sbi	0x18, 0	; 24
+	
+	PORT_stroka2 &= ~_BV(stroka2);_delay_us(100);
+  ba:	97 98       	cbi	0x12, 7	; 18
+  bc:	81 e2       	ldi	r24, 0x21	; 33
+  be:	8a 95       	dec	r24
+  c0:	f1 f7       	brne	.-4      	; 0xbe <skan_klav+0x34>
+	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav21;
+  c2:	86 99       	sbic	0x10, 6	; 16
+  c4:	02 c0       	rjmp	.+4      	; 0xca <skan_klav+0x40>
+  c6:	82 e3       	ldi	r24, 0x32	; 50
+  c8:	0b c0       	rjmp	.+22     	; 0xe0 <skan_klav+0x56>
+	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav22;
+  ca:	9a 99       	sbic	0x13, 2	; 19
+  cc:	02 c0       	rjmp	.+4      	; 0xd2 <skan_klav+0x48>
+  ce:	85 e3       	ldi	r24, 0x35	; 53
+  d0:	07 c0       	rjmp	.+14     	; 0xe0 <skan_klav+0x56>
+	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav23;
+  d2:	99 99       	sbic	0x13, 1	; 19
+  d4:	02 c0       	rjmp	.+4      	; 0xda <skan_klav+0x50>
+  d6:	88 e3       	ldi	r24, 0x38	; 56
+  d8:	03 c0       	rjmp	.+6      	; 0xe0 <skan_klav+0x56>
+	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav24;
+  da:	b1 99       	sbic	0x16, 1	; 22
+  dc:	03 c0       	rjmp	.+6      	; 0xe4 <skan_klav+0x5a>
+  de:	80 e3       	ldi	r24, 0x30	; 48
+  e0:	80 93 60 00 	sts	0x0060, r24
+	PORT_stroka2 |=  _BV(stroka2);
+  e4:	97 9a       	sbi	0x12, 7	; 18
+	
+	PORT_stroka3 &= ~_BV(stroka3);_delay_us(100);
+  e6:	a8 98       	cbi	0x15, 0	; 21
+  e8:	81 e2       	ldi	r24, 0x21	; 33
+  ea:	8a 95       	dec	r24
+  ec:	f1 f7       	brne	.-4      	; 0xea <skan_klav+0x60>
+	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav31;
+  ee:	86 99       	sbic	0x10, 6	; 16
+  f0:	02 c0       	rjmp	.+4      	; 0xf6 <skan_klav+0x6c>
+  f2:	83 e3       	ldi	r24, 0x33	; 51
+  f4:	0b c0       	rjmp	.+22     	; 0x10c <skan_klav+0x82>
+	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav32;
+  f6:	9a 99       	sbic	0x13, 2	; 19
+  f8:	02 c0       	rjmp	.+4      	; 0xfe <skan_klav+0x74>
+  fa:	86 e3       	ldi	r24, 0x36	; 54
+  fc:	07 c0       	rjmp	.+14     	; 0x10c <skan_klav+0x82>
+	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav33;
+  fe:	99 99       	sbic	0x13, 1	; 19
+ 100:	02 c0       	rjmp	.+4      	; 0x106 <skan_klav+0x7c>
+ 102:	89 e3       	ldi	r24, 0x39	; 57
+ 104:	03 c0       	rjmp	.+6      	; 0x10c <skan_klav+0x82>
+	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav34;
+ 106:	b1 99       	sbic	0x16, 1	; 22
+ 108:	03 c0       	rjmp	.+6      	; 0x110 <skan_klav+0x86>
+ 10a:	83 e2       	ldi	r24, 0x23	; 35
+ 10c:	80 93 60 00 	sts	0x0060, r24
+	PORT_stroka3 |=  _BV(stroka3);
+ 110:	a8 9a       	sbi	0x15, 0	; 21
+	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav41;
+	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav42;
+	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav43;
+	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav44;
+	PORT_stroka4 |=  _BV(stroka4);*/
+ 112:	08 95       	ret
+
+00000114 <lcd>:
+
+
+//-------Общая часть функций lcd_com, lcd_dat----------- ДЛЯ МЛАДШИХ РАЗРЯДОВ ПОРТА
+void lcd(unsigned char p) //"p" - байт данных или команд 
+{ 
+    PORT_lcd &= 0xF0;             //Очистка младших разрядов
+ 114:	92 b3       	in	r25, 0x12	; 18
+ 116:	90 7f       	andi	r25, 0xF0	; 240
+ 118:	92 bb       	out	0x12, r25	; 18
+    PORT_lcd |= (p >>4);         //Старший ниббл
+ 11a:	22 b3       	in	r18, 0x12	; 18
+ 11c:	98 2f       	mov	r25, r24
+ 11e:	92 95       	swap	r25
+ 120:	9f 70       	andi	r25, 0x0F	; 15
+ 122:	92 2b       	or	r25, r18
+ 124:	92 bb       	out	0x12, r25	; 18
+ 126:	23 e0       	ldi	r18, 0x03	; 3
+ 128:	92 2f       	mov	r25, r18
+ 12a:	9a 95       	dec	r25
+ 12c:	f1 f7       	brne	.-4      	; 0x12a <lcd+0x16>
+    _delay_us(10);                //Длительность сигнала EN 
+    PORT_lcd &= ~_BV(EN);        //EN=0, фронт записи данных в ЖКИ 
+ 12e:	94 98       	cbi	0x12, 4	; 18
+ 130:	92 2f       	mov	r25, r18
+ 132:	9a 95       	dec	r25
+ 134:	f1 f7       	brne	.-4      	; 0x132 <lcd+0x1e>
+    _delay_us(10);                //Длительность сигнала EN 
+    PORT_lcd |= _BV(EN);          //Сигнал EN=1 
+ 136:	94 9a       	sbi	0x12, 4	; 18
+    PORT_lcd &= 0xF0;             // Очистка младших разрядов
+ 138:	92 b3       	in	r25, 0x12	; 18
+ 13a:	90 7f       	andi	r25, 0xF0	; 240
+ 13c:	92 bb       	out	0x12, r25	; 18
+	PORT_lcd |= (p & 0x0F);       //Младший ниббл 
+ 13e:	92 b3       	in	r25, 0x12	; 18
+ 140:	8f 70       	andi	r24, 0x0F	; 15
+ 142:	98 2b       	or	r25, r24
+ 144:	92 bb       	out	0x12, r25	; 18
+ 146:	2a 95       	dec	r18
+ 148:	f1 f7       	brne	.-4      	; 0x146 <lcd+0x32>
+    _delay_us(10);                //Длительность сигнала EN 
+    PORT_lcd &= ~_BV(EN);        //EN=0, фронт записи данных в ЖКИ 
+ 14a:	94 98       	cbi	0x12, 4	; 18
+ 14c:	8d e0       	ldi	r24, 0x0D	; 13
+ 14e:	8a 95       	dec	r24
+ 150:	f1 f7       	brne	.-4      	; 0x14e <lcd+0x3a>
+    _delay_us(40);                //Пауза для выполнения команды 
+} 
+ 152:	08 95       	ret
+
+00000154 <lcd_com>:
+                             
+
+//-----------Функция записи команды в ЖКИ--------------- 
+void lcd_com(unsigned char p)       //"p" - байт команды 
+{
+    PORT_lcd &= ~_BV(RS);
+ 154:	95 98       	cbi	0x12, 5	; 18
+    PORT_lcd |= _BV(EN);      //RS=0, EN=1 
+ 156:	94 9a       	sbi	0x12, 4	; 18
+    lcd(p);   //Вызов общей части функций lcd_com, lcd_dat   
+ 158:	dd df       	rcall	.-70     	; 0x114 <lcd>
+}                          //Окончание функции "lcd_com" 
+ 15a:	08 95       	ret
+
+0000015c <lcd_dat>:
+
+//-----------Функция записи данных в ЖКИ---------------- =29
+void lcd_dat(unsigned char p)        //"p" - байт данных =30
+{
+    PORT_lcd |= _BV(RS) | _BV(EN);               //RS=1, EN=1 =31
+ 15c:	92 b3       	in	r25, 0x12	; 18
+ 15e:	90 63       	ori	r25, 0x30	; 48
+ 160:	92 bb       	out	0x12, r25	; 18
+    lcd(p);   //Вызов общей части функций lcd_com, lcd_dat =32  
+ 162:	d8 df       	rcall	.-80     	; 0x114 <lcd>
+}                          //Окончание функции "lcd_dat" =33
+ 164:	08 95       	ret
+
+00000166 <lcd_init>:
+
+//------------Функция инициализации ЖКИ----------------- =34
+void lcd_init(void)       //Режим 4 бит, мигающий курсор =35
+{
+    //DDR_lcd |= 0xF0;//Порт lcd на выход для СТАРШИХ разрядов порта
+	DDR_lcd |= 0x0F;//Порт lcd на выход для МЛАДШИХ разрядов порта
+ 166:	81 b3       	in	r24, 0x11	; 17
+ 168:	8f 60       	ori	r24, 0x0F	; 15
+ 16a:	81 bb       	out	0x11, r24	; 17
+	DDR_EN |= _BV(EN);
+ 16c:	8c 9a       	sbi	0x11, 4	; 17
+	DDR_RS |= _BV(RS);
+ 16e:	8d 9a       	sbi	0x11, 5	; 17
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 170:	84 ec       	ldi	r24, 0xC4	; 196
+ 172:	99 e0       	ldi	r25, 0x09	; 9
+ 174:	01 97       	sbiw	r24, 0x01	; 1
+ 176:	f1 f7       	brne	.-4      	; 0x174 <lcd_init+0xe>
+    _delay_ms(10);
+	
+    lcd_com(0x33);
+ 178:	83 e3       	ldi	r24, 0x33	; 51
+ 17a:	ec df       	rcall	.-40     	; 0x154 <lcd_com>
+ 17c:	88 ea       	ldi	r24, 0xA8	; 168
+ 17e:	91 e6       	ldi	r25, 0x61	; 97
+ 180:	01 97       	sbiw	r24, 0x01	; 1
+ 182:	f1 f7       	brne	.-4      	; 0x180 <lcd_init+0x1a>
+    _delay_ms(100);          //Подготовка =36
+    lcd_com(0x32); 
+ 184:	82 e3       	ldi	r24, 0x32	; 50
+ 186:	e6 df       	rcall	.-52     	; 0x154 <lcd_com>
+	lcd_com(0x28);
+ 188:	88 e2       	ldi	r24, 0x28	; 40
+ 18a:	e4 df       	rcall	.-56     	; 0x154 <lcd_com>
+    lcd_com(0x28);
+ 18c:	88 e2       	ldi	r24, 0x28	; 40
+ 18e:	e2 df       	rcall	.-60     	; 0x154 <lcd_com>
+    lcd_com(0x28);        //4 бит, 2 строки =37
+ 190:	88 e2       	ldi	r24, 0x28	; 40
+ 192:	e0 df       	rcall	.-64     	; 0x154 <lcd_com>
+	lcd_com(0x08);             //Полное выключение дисплея =38
+ 194:	88 e0       	ldi	r24, 0x08	; 8
+ 196:	de df       	rcall	.-68     	; 0x154 <lcd_com>
+	lcd_com(0x01); 
+ 198:	81 e0       	ldi	r24, 0x01	; 1
+ 19a:	dc df       	rcall	.-72     	; 0x154 <lcd_com>
+ 19c:	80 e5       	ldi	r24, 0x50	; 80
+ 19e:	93 ec       	ldi	r25, 0xC3	; 195
+ 1a0:	01 97       	sbiw	r24, 0x01	; 1
+ 1a2:	f1 f7       	brne	.-4      	; 0x1a0 <lcd_init+0x3a>
+	_delay_ms(200);   //Очистка дисплея =39
+    lcd_com(0x06);                  //Сдвиг курсора вправо =40
+ 1a4:	86 e0       	ldi	r24, 0x06	; 6
+ 1a6:	d6 df       	rcall	.-84     	; 0x154 <lcd_com>
+    lcd_com(0x0C);    //Включение дисплея
+ 1a8:	8c e0       	ldi	r24, 0x0C	; 12
+ 1aa:	d4 df       	rcall	.-88     	; 0x154 <lcd_com>
+	//InitCGram();
+}                         
+ 1ac:	08 95       	ret
+
+000001ae <show_string_flash>:
+
+//Функция вывода строки из FLASH на LCD по адресу   
+void show_string_flash (unsigned char adress, const unsigned char *string)
+    {
+ 1ae:	0f 93       	push	r16
+ 1b0:	1f 93       	push	r17
+ 1b2:	cf 93       	push	r28
+ 1b4:	df 93       	push	r29
+ 1b6:	8b 01       	movw	r16, r22
+	    unsigned char i;
+		lcd_com (adress);
+ 1b8:	cd df       	rcall	.-102    	; 0x154 <lcd_com>
+ 1ba:	c0 e0       	ldi	r28, 0x00	; 0
+ 1bc:	d0 e0       	ldi	r29, 0x00	; 0
+        for (i=0; i<16; i++)
+	    lcd_dat(pgm_read_byte(&string[i]));  
+ 1be:	f8 01       	movw	r30, r16
+ 1c0:	ec 0f       	add	r30, r28
+ 1c2:	fd 1f       	adc	r31, r29
+ 1c4:	e4 91       	lpm	r30, Z+
+ 1c6:	8e 2f       	mov	r24, r30
+ 1c8:	c9 df       	rcall	.-110    	; 0x15c <lcd_dat>
+ 1ca:	21 96       	adiw	r28, 0x01	; 1
+//Функция вывода строки из FLASH на LCD по адресу   
+void show_string_flash (unsigned char adress, const unsigned char *string)
+    {
+	    unsigned char i;
+		lcd_com (adress);
+        for (i=0; i<16; i++)
+ 1cc:	c0 31       	cpi	r28, 0x10	; 16
+ 1ce:	d1 05       	cpc	r29, r1
+ 1d0:	b1 f7       	brne	.-20     	; 0x1be <show_string_flash+0x10>
+	    lcd_dat(pgm_read_byte(&string[i]));  
+	}
+ 1d2:	df 91       	pop	r29
+ 1d4:	cf 91       	pop	r28
+ 1d6:	1f 91       	pop	r17
+ 1d8:	0f 91       	pop	r16
+ 1da:	08 95       	ret
+
+000001dc <show_string_rom>:
+
+//Функция вывода строки из ROM на LCD по адресу   
+void show_string_rom (unsigned char adress, const unsigned char *string)
+    {
+ 1dc:	0f 93       	push	r16
+ 1de:	1f 93       	push	r17
+ 1e0:	cf 93       	push	r28
+ 1e2:	df 93       	push	r29
+ 1e4:	8b 01       	movw	r16, r22
+	    unsigned char i;
+		lcd_com (adress);
+ 1e6:	b6 df       	rcall	.-148    	; 0x154 <lcd_com>
+ 1e8:	c0 e0       	ldi	r28, 0x00	; 0
+ 1ea:	d0 e0       	ldi	r29, 0x00	; 0
+        for (i=0; i<16; i++)
+	    lcd_dat(string[i]);  
+ 1ec:	f8 01       	movw	r30, r16
+ 1ee:	ec 0f       	add	r30, r28
+ 1f0:	fd 1f       	adc	r31, r29
+ 1f2:	80 81       	ld	r24, Z
+ 1f4:	b3 df       	rcall	.-154    	; 0x15c <lcd_dat>
+ 1f6:	21 96       	adiw	r28, 0x01	; 1
+//Функция вывода строки из ROM на LCD по адресу   
+void show_string_rom (unsigned char adress, const unsigned char *string)
+    {
+	    unsigned char i;
+		lcd_com (adress);
+        for (i=0; i<16; i++)
+ 1f8:	c0 31       	cpi	r28, 0x10	; 16
+ 1fa:	d1 05       	cpc	r29, r1
+ 1fc:	b9 f7       	brne	.-18     	; 0x1ec <show_string_rom+0x10>
+	    lcd_dat(string[i]);  
+	}
+ 1fe:	df 91       	pop	r29
+ 200:	cf 91       	pop	r28
+ 202:	1f 91       	pop	r17
+ 204:	0f 91       	pop	r16
+ 206:	08 95       	ret
+
+00000208 <_exit>:
+ 208:	f8 94       	cli
+
+0000020a <__stop_program>:
+ 20a:	ff cf       	rjmp	.-2      	; 0x20a <__stop_program>

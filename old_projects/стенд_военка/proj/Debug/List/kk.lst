@@ -1,0 +1,143 @@
+###############################################################################
+#                                                                             #
+#                                                       03/Dec/2012  22:45:02 #
+# IAR C/C++ Compiler V6.11.1.20453, Evaluation Version  for Atmel AVR         #
+# Copyright 1996-2011 IAR Systems AB.                                         #
+#                                                                             #
+#    Source file  =  C:\Users\admin\Documents\proj\klava\kk.c                 #
+#    Command line =  C:\Users\admin\Documents\proj\klava\kk.c --cpu=m8 -mt    #
+#                    -o C:\Users\admin\Documents\proj\Debug\Obj\ -lCN         #
+#                    C:\Users\admin\Documents\proj\Debug\List\                #
+#                    --initializers_in_flash --no_cse --no_inline             #
+#                    --no_code_motion --no_cross_call --no_clustering         #
+#                    --no_tbaa --debug -DENABLE_BIT_DEFINITIONS -e            #
+#                    --eeprom_size 512 --clib -Ol                             #
+#    List file    =  C:\Users\admin\Documents\proj\Debug\List\kk.lst          #
+#    Object file  =  C:\Users\admin\Documents\proj\Debug\Obj\kk.r90           #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\admin\Documents\proj\klava\kk.c
+      1          #include "kk.h"
+      2          
+      3          #ifndef KK_H
+      4          #define KK_H
+      5          
+      6          
+      7          
+      8          #define klav11 '1'
+      9          #define klav12 '4'
+     10          #define klav13 '7'
+     11          #define klav14 '*'
+     12          #define klav21 '2'
+     13          #define klav22 '5'
+     14          #define klav23 '8'
+     15          #define klav24 '0'
+     16          #define klav31 '3'
+     17          #define klav32 '6'
+     18          #define klav33 '9'
+     19          #define klav34 '#'
+     20          #define klav41 'A'
+     21          #define klav42 'B'
+     22          #define klav43 'C'
+     23          #define klav44 'D'
+     24          
+     25          #define stolb1  PB0
+     26          #define stolb2  PB1
+     27          #define stolb3  PB2
+     28          #define stolb4  
+     29          #define stroka1 PB4
+     30          #define stroka2 PB5
+     31          #define stroka3 PB6
+     32          #define stroka4 PB7
+     33          
+     34          #define DDR_stolb1  DDRB
+     35          #define DDR_stolb2  DDRB
+     36          #define DDR_stolb3  DDRB
+     37          #define DDR_stolb4
+     38          #define DDR_stroka1 DDRB
+     39          #define DDR_stroka2 DDRB
+     40          #define DDR_stroka3 DDRB
+     41          #define DDR_stroka4 DDRB
+     42          
+     43          #define PIN_stolb1  PINB
+     44          #define PIN_stolb2  PINB
+     45          #define PIN_stolb3  PINB
+     46          #define PIN_stolb4  
+     47          #define PIN_stroka1 PINB
+     48          #define PIN_stroka2 PINB
+     49          #define PIN_stroka3 PINB
+     50          #define PIN_stroka4 PINB
+     51          
+     52          #define PORT_stolb1  PORTB
+     53          #define PORT_stolb2  PORTB
+     54          #define PORT_stolb3  PORTB
+     55          #define PORT_stolb4
+     56          #define PORT_stroka1 PORTB
+     57          #define PORT_stroka2 PORTB
+     58          #define PORT_stroka3 PORTB
+     59          #define PORT_stroka4 PORTB
+     60          
+     61          void init_klav (void);
+     62          void skan_klav (void);
+     63          extern unsigned char klav;
+     64          
+     65          #endif 
+     66          
+     67          
+     68          void init_klav (void)
+     69          {
+     70              DDR_stolb1  &= ~_BV(stolb1);
+     71              DDR_stolb2  &= ~_BV(stolb2);
+     72              DDR_stolb3  &= ~_BV(stolb3);
+     73              DDR_stolb4  &= ~_BV(stolb4);//столбцы -  входы
+     74              DDR_stroka1 |=  _BV(stroka1);
+     75              DDR_stroka2 |=  _BV(stroka2);
+     76              DDR_stroka3 |=  _BV(stroka3);
+     77              //DDR_stroka4 |=  _BV(stroka4);//строки - выходы
+     78          	
+     79          	PORT_stolb1  |= _BV(stolb1);
+     80              PORT_stolb2  |= _BV(stolb2);
+     81              PORT_stolb3  |= _BV(stolb3);
+     82              PORT_stolb4  |= _BV(stolb4);//столбцы - входы с подт€гивающими резисторами
+     83              PORT_stroka1 |= _BV(stroka1);
+     84              PORT_stroka2 |= _BV(stroka2);
+     85              PORT_stroka3 |= _BV(stroka3);
+     86              //PORT_stroka4 |= _BV(stroka4);//строки - выходы с лог.1
+     87          }
+     88          
+     89           void skan_klav (void)
+     90          {
+     91              klav = 0;//если не нажата ни одна клавиша значение переменной обнул€ем
+     92          	PORT_stroka1 &= ~_BV(stroka1);_delay_us(100);//в 1-ю строку даЄм 0
+     93          	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav11;//если он в 1-м столбце, то нажата клавиша 11
+     94          	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav12;
+     95          	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav13;
+     96          	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav14;
+     97          	PORT_stroka1 |=  _BV(stroka1);
+     98          	
+     99          	PORT_stroka2 &= ~_BV(stroka2);_delay_us(100);
+    100          	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav21;
+    101          	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav22;
+    102          	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav23;
+    103          	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav24;
+    104          	PORT_stroka2 |=  _BV(stroka2);
+    105          	
+    106          	PORT_stroka3 &= ~_BV(stroka3);_delay_us(100);
+    107          	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav31;
+    108          	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav32;
+    109          	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav33;
+    110          	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav34;
+    111          	PORT_stroka3 |=  _BV(stroka3);
+    112          	
+    113          	/*PORT_stroka4 &= ~_BV(stroka4);_delay_us(100);
+    114          	     if(bit_is_clear(PIN_stolb1, stolb1)) klav = klav41;
+    115          	else if(bit_is_clear(PIN_stolb2, stolb2)) klav = klav42;
+    116          	else if(bit_is_clear(PIN_stolb3, stolb3)) klav = klav43;
+    117          	else if(bit_is_clear(PIN_stolb4, stolb4)) klav = klav44;
+    118          	PORT_stroka4 |=  _BV(stroka4);*/
+    119          }
+
+Errors: 32
+Warnings: 6

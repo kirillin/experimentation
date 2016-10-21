@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>mm/Debug</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>281</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <ColumnWidth0>20</ColumnWidth0><ColumnWidth1>1395</ColumnWidth1><ColumnWidth2>372</ColumnWidth2><ColumnWidth3>93</ColumnWidth3></Build>
+    <TerminalIO/></Static>
+    <Windows>
+      
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-7950-1730</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>mm</ExpandedNode><ExpandedNode>mm/main.c</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-25034-2024</Identity>
+            <TabName>Build</TabName>
+            <Factory>Build</Factory>
+            <Session/>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\keyboard.c</Filename><XPos>0</XPos><YPos>108</YPos><SelStart>5084</SelStart><SelEnd>5084</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\indicator.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>203</SelStart><SelEnd>203</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\keyboard.h</Filename><XPos>0</XPos><YPos>48</YPos><SelStart>1278</SelStart><SelEnd>1278</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\IAR Systems\Embedded Workbench Evaluation 6.0\avr\inc\intrinsics.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>430</SelStart><SelEnd>430</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Users\admin\Documents\&#x41D;&#x43e;&#x432;&#x430;&#x44F; &#x43F;&#x430;&#x43F;&#x43A;&#x430;\keyboard.c</Filename><XPos>0</XPos><YPos>159</YPos><SelStart>5288</SelStart><SelEnd>5288</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\main.c</Filename><XPos>0</XPos><YPos>36</YPos><SelStart>368</SelStart><SelEnd>368</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\indicator.c</Filename><XPos>0</XPos><YPos>66</YPos><SelStart>1785</SelStart><SelEnd>1785</SelEnd></Tab><ActiveTab>6</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-004b22c8><key>iaridepm.enu1</key></Toolbar-004b22c8></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>752</Bottom><Right>355</Right><x>-2</x><y>-2</y><xscreen>300</xscreen><yscreen>203</yscreen><sizeHorzCX>156250</sizeHorzCX><sizeHorzCY>203407</sizeHorzCY><sizeVertCX>185938</sizeVertCX><sizeVertCY>755511</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>201</Bottom><Right>1922</Right><x>-2</x><y>-2</y><xscreen>1924</xscreen><yscreen>203</yscreen><sizeHorzCX>1002083</sizeHorzCX><sizeHorzCY>203407</sizeHorzCY><sizeVertCX>156250</sizeVertCX><sizeVertCY>203407</sizeVertCY></Rect></Wnd1></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

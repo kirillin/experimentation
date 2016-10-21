@@ -1,0 +1,631 @@
+###############################################################################
+#                                                                             #
+#                                                       04/Dec/2012  21:43:36 #
+# IAR C/C++ Compiler V6.11.1.20453, Evaluation Version  for Atmel AVR         #
+# Copyright 1996-2011 IAR Systems AB.                                         #
+#                                                                             #
+#    Source file  =  C:\Users\admin\Documents\proj\keyboard.c                 #
+#    Command line =  C:\Users\admin\Documents\proj\keyboard.c --cpu=m8 -mt    #
+#                    -o C:\Users\admin\Documents\proj\Debug\Obj\ -lCN         #
+#                    C:\Users\admin\Documents\proj\Debug\List\                #
+#                    --initializers_in_flash --no_cse --no_inline             #
+#                    --no_code_motion --no_cross_call --no_clustering         #
+#                    --no_tbaa --debug -DENABLE_BIT_DEFINITIONS -e            #
+#                    --eeprom_size 512 --clib -Ol                             #
+#    List file    =  C:\Users\admin\Documents\proj\Debug\List\keyboard.lst    #
+#    Object file  =  C:\Users\admin\Documents\proj\Debug\Obj\keyboard.r90     #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\admin\Documents\proj\keyboard.c
+      1          //*****************************************************************************
+      2          //
+      3          //  Author(s)...: Pashgan    http://ChipEnable.Ru   
+      4          //
+      5          //  Target(s)...: любой
+      6          //
+      7          //  Compiler....: любой
+      8          //
+      9          //  Description.: Универсальный драйвер матричной клавиатуры
+     10          //
+     11          //  Data........: 12.10.2011
+     12          //
+     13          //******************************************************************************
+     14          #include "keyboard.h"
+     15          
+     16          
+     17          //раздел для совместимости с компиляторами**************************************
+     18          //менять здесь ничего не надо
+     19          
+     20          #ifdef  __ICCAVR__
+     21            #include <ioavr.h>
+
+   \                                 In  segment ABSOLUTE, at 0x30
+   \   union <unnamed> volatile __io _A_PIND
+   \                     _A_PIND:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x31
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x32
+   \   union <unnamed> volatile __io _A_PORTD
+   \                     _A_PORTD:
+   \   00000000                      DS8 1
+     22            #include <intrinsics.h>
+     23            
+     24            #define _delay_us(value)  __delay_cycles((F_CPU / 1000000) * (value));
+     25            #define FLASH_ATR         __flash
+     26            #define read_flash(adr)   adr
+     27          #endif
+     28          
+     29          #ifdef  __GNUC__
+     30            #include <avr/io.h>
+     31            #include <util/delay.h>
+     32            #include <avr/interrupt.h>
+     33            #include <avr/pgmspace.h>  
+     34            
+     35            #define FLASH_ATR         PROGMEM
+     36            #define read_flash(adr)   pgm_read_byte(&(adr))
+     37          #endif
+     38          
+     39          #ifdef __CODEVISIONAVR__
+     40            #include <io.h>
+     41            #include <delay.h>
+     42            
+     43            #define _delay_us(value) delay_us(value)
+     44            #define FLASH_ATR         __flash
+     45            #define read_flash(adr)   adr
+     46          #endif
+     47          //******************************************************************************
+     48          
+     49          
+     50          
+     51          
+     52          #ifdef KEYBOARD_4X4  
+     53             #warning "Keyboard 4x4"
+     54          
+     55             #define KEYS 16
+     56             #define SCAN_CYCLES 4
+     57             #define ROW_MASK ((1<<PIN_ROW1)|(1<<PIN_ROW2)|(1<<PIN_ROW3)|(1<<PIN_ROW4))
+     58             #define COL_MASK ((1<<PIN_COL1)|(1<<PIN_COL2)|(1<<PIN_COL3)|(1<<PIN_COL4))
+     59            
+     60            //таблица перекодировки
+     61            FLASH_ATR unsigned char keyTable[][2] = { 
+     62            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY1},
+     63            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY2},
+     64            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY3},
+     65            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL4)&(COL_MASK))), EVENT_KEYA},
+     66          
+     67            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY4},
+     68            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY5},
+     69            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY6}, 
+     70            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL4)&(COL_MASK))), EVENT_KEYB},  
+     71           
+     72            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY7},
+     73            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY8},
+     74            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY9},    
+     75            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL4)&(COL_MASK))), EVENT_KEYC}, 
+     76          
+     77            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEYZ},
+     78            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY0},
+     79            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEYR}, 
+     80            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL4)&(COL_MASK))), EVENT_KEYD} 
+     81            };
+     82          
+     83          #else  
+     84            #warning "Keyboard3x4"
+     85          
+     86            #define KEYS 12
+     87            #define SCAN_CYCLES 3
+     88            #define ROW_MASK ((1<<PIN_ROW1)|(1<<PIN_ROW2)|(1<<PIN_ROW3)|(1<<PIN_ROW4))
+     89            #define COL_MASK ((1<<PIN_COL1)|(1<<PIN_COL2)|(1<<PIN_COL3))
+     90            
+     91            //таблица перекодировки
+
+   \                                 In  segment NEAR_F, align 1, keep-with-next
+     92            FLASH_ATR unsigned char keyTable[][2] = { 
+   \                     keyTable:
+   \   00000000   06E65BE54FE3       DC8 230, 6, 229, 91, 227, 79, 214, 102, 213, 109, 211, 125, 182, 7, 181
+   \              66D66DD57DD3
+   \              07B6B5      
+   \   0000000F   B37F766F7520       DC8 127, 179, 111, 118, 32, 117, 63, 115, 2
+   \              733F02      
+     93            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY1},
+     94            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY2},
+     95            {((~(1<<PIN_ROW1)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY3},
+     96              
+     97            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY4},
+     98            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY5},
+     99            {((~(1<<PIN_ROW2)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY6}, 
+    100              
+    101            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEY7},
+    102            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY8},
+    103            {((~(1<<PIN_ROW3)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEY9},    
+    104          
+    105            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL1)&(COL_MASK))), EVENT_KEYZ},
+    106            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL2)&(COL_MASK))), EVENT_KEY0},
+    107            {((~(1<<PIN_ROW4)&(ROW_MASK))|(~(1<<PIN_COL3)&(COL_MASK))), EVENT_KEYR}
+    108            };
+    109          
+    110          #endif
+    111          
+    112          #define DELAY 5
+    113            
+    114          //состояние автомата
+
+   \                                 In  segment TINY_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: TINY_Z>`
+    115          unsigned char keyState = 0;
+   \                     keyState:
+   \   00000000                      DS8 1
+    116          //код кнопки
+
+   \                                 In  segment TINY_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: TINY_Z>`
+    117          unsigned char keyCode;
+   \                     keyCode:
+   \   00000000                      DS8 1
+    118          //символьный код кнопки
+
+   \                                 In  segment TINY_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: TINY_Z>`
+    119          volatile unsigned char keyValue;
+   \                     keyValue:
+   \   00000000                      DS8 1
+    120          //флаг - кнопка нажата и удерживается
+
+   \                                 In  segment TINY_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: TINY_Z>`
+    121          unsigned char keyDown;
+   \                     keyDown:
+   \   00000000                      DS8 1
+    122          //флаг - нажата новая кнопка
+
+   \                                 In  segment TINY_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: TINY_Z>`
+    123          volatile unsigned char keyNew;
+   \                     keyNew:
+   \   00000000                      DS8 1
+    124          
+    125          unsigned char KEYB_AnyKey(void);
+    126          unsigned char KEYB_SameKey(void);
+    127          void KEYB_ScanKey(void);
+    128          void KEYB_FindKey(void);
+    129          void KEYB_ClearKey(void);
+    130          
+    131          //инициализация портов, 
+    132          //обнуление переменных
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    133          void KEYB_Init(void)
+   \                     KEYB_Init:
+    134          {
+    135          #ifndef COMMON_BUS  
+    136            //вход, подтяжка
+    137            DDRX_ROW &= ~ROW_MASK;
+   \   00000000   B301               IN      R16, 0x11
+   \   00000002   700F               ANDI    R16, 0x0F
+   \   00000004   BB01               OUT     0x11, R16
+    138            PORTX_ROW |= ROW_MASK;
+   \   00000006   B302               IN      R16, 0x12
+   \   00000008   6F00               ORI     R16, 0xF0
+   \   0000000A   BB02               OUT     0x12, R16
+    139            //выход, ноль
+    140            DDRX_COL |= COL_MASK; 
+   \   0000000C   B301               IN      R16, 0x11
+   \   0000000E   6007               ORI     R16, 0x07
+   \   00000010   BB01               OUT     0x11, R16
+    141            PORTX_COL &= ~COL_MASK;
+   \   00000012   B302               IN      R16, 0x12
+   \   00000014   7F08               ANDI    R16, 0xF8
+   \   00000016   BB02               OUT     0x12, R16
+    142          #endif //COMMON_BUS   
+    143            
+    144            keyState = 0;
+   \   00000018   E000               LDI     R16, 0
+   \   0000001A   9300....           STS     keyState, R16
+    145            keyCode = 0;
+   \   0000001E   E000               LDI     R16, 0
+   \   00000020   9300....           STS     keyCode, R16
+    146            keyValue = 0;
+   \   00000024   E000               LDI     R16, 0
+   \   00000026   9300....           STS     keyValue, R16
+    147            keyDown = 0;
+   \   0000002A   E000               LDI     R16, 0
+   \   0000002C   9300....           STS     keyDown, R16
+    148            keyNew = 0;
+   \   00000030   E000               LDI     R16, 0
+   \   00000032   9300....           STS     keyNew, R16
+    149          }
+   \   00000036   9508               RET
+   \   00000038                      REQUIRE _A_DDRD
+   \   00000038                      REQUIRE _A_PORTD
+    150          
+    151          
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    152          void KEYB_ScanKeyboard(void)
+   \                     KEYB_ScanKeyboard:
+    153          {
+    154          #ifdef COMMON_BUS
+    155            unsigned char bufer[4];
+    156            bufer[0] = DDRX_COL;
+    157            bufer[1] = PORTX_COL;
+    158            bufer[2] = DDRX_ROW;
+    159            bufer[3] = PORTX_ROW;
+    160            
+    161            //вход, подтяжка
+    162            DDRX_ROW &= ~ROW_MASK;
+    163            PORTX_ROW |= ROW_MASK;
+    164            
+    165            //выход, ноль
+    166            DDRX_COL |= COL_MASK; 
+    167            PORTX_COL &= ~COL_MASK;
+    168          #endif //COMMON_BUS  
+    169            
+    170            switch (keyState){
+   \   00000000   9100....           LDS     R16, keyState
+   \   00000004   5000               SUBI    R16, 0
+   \   00000006   F039               BREQ    ??KEYB_ScanKeyboard_0
+   \   00000008   950A               DEC     R16
+   \   0000000A   F069               BREQ    ??KEYB_ScanKeyboard_1
+   \   0000000C   950A               DEC     R16
+   \   0000000E   F0B9               BREQ    ??KEYB_ScanKeyboard_2
+   \   00000010   950A               DEC     R16
+   \   00000012   F0E1               BREQ    ??KEYB_ScanKeyboard_3
+   \   00000014   9508               RET
+    171               case 0: {
+    172                 if (KEYB_AnyKey()) {
+   \                     ??KEYB_ScanKeyboard_0:
+   \   00000016   ....               RCALL   KEYB_AnyKey
+   \   00000018   2300               TST     R16
+   \   0000001A   F119               BREQ    ??KEYB_ScanKeyboard_4
+    173                   KEYB_ScanKey();
+   \   0000001C   ....               RCALL   KEYB_ScanKey
+    174                   keyState = 1;
+   \   0000001E   E001               LDI     R16, 1
+   \   00000020   9300....           STS     keyState, R16
+    175                 }
+    176               }
+    177               break;
+   \   00000024   9508               RET
+    178               
+    179               case 1: {
+    180                 if (KEYB_SameKey()) {
+   \                     ??KEYB_ScanKeyboard_1:
+   \   00000026   ....               RCALL   KEYB_SameKey
+   \   00000028   2300               TST     R16
+   \   0000002A   F029               BREQ    ??KEYB_ScanKeyboard_5
+    181                   KEYB_FindKey();
+   \   0000002C   ....               RCALL   KEYB_FindKey
+    182                   keyState = 2;   
+   \   0000002E   E002               LDI     R16, 2
+   \   00000030   9300....           STS     keyState, R16
+   \   00000034   9508               RET
+    183                 }
+    184                 else keyState = 0;
+   \                     ??KEYB_ScanKeyboard_5:
+   \   00000036   E000               LDI     R16, 0
+   \   00000038   9300....           STS     keyState, R16
+    185               }
+    186               break;
+   \   0000003C   9508               RET
+    187               
+    188               case 2: {
+    189                 if (KEYB_SameKey()) {}
+   \                     ??KEYB_ScanKeyboard_2:
+   \   0000003E   ....               RCALL   KEYB_SameKey
+   \   00000040   2300               TST     R16
+   \   00000042   F479               BRNE    ??KEYB_ScanKeyboard_4
+    190                 else keyState = 3;
+   \   00000044   E003               LDI     R16, 3
+   \   00000046   9300....           STS     keyState, R16
+    191               }
+    192               break;
+   \   0000004A   9508               RET
+    193               
+    194               case 3: {
+    195                 if (KEYB_SameKey()) {
+   \                     ??KEYB_ScanKeyboard_3:
+   \   0000004C   ....               RCALL   KEYB_SameKey
+   \   0000004E   2300               TST     R16
+   \   00000050   F021               BREQ    ??KEYB_ScanKeyboard_6
+    196                   keyState = 2;
+   \   00000052   E002               LDI     R16, 2
+   \   00000054   9300....           STS     keyState, R16
+   \   00000058   9508               RET
+    197                 }
+    198                 else {
+    199                   KEYB_ClearKey();
+   \                     ??KEYB_ScanKeyboard_6:
+   \   0000005A   ....               RCALL   KEYB_ClearKey
+    200                   keyState = 0;
+   \   0000005C   E000               LDI     R16, 0
+   \   0000005E   9300....           STS     keyState, R16
+    201                 }
+    202               }
+    203               break;
+    204               
+    205               default:
+    206                 break;
+    207             }
+    208            
+    209          #ifdef COMMON_BUS  
+    210            DDRX_COL = bufer[0];
+    211            PORTX_COL = bufer[1];
+    212            DDRX_ROW = bufer[2];    
+    213            PORTX_ROW = bufer[3];
+    214          #endif //COMMON_BUS  
+    215          }
+   \                     ??KEYB_ScanKeyboard_4:
+   \   00000062   9508               RET
+    216          
+    217          
+    218          //возвращает true если какая нибудь кнопка нажата
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    219          unsigned char KEYB_AnyKey(void) 
+   \                     KEYB_AnyKey:
+    220          {  
+    221            PORTX_COL &= ~COL_MASK;
+   \   00000000   B302               IN      R16, 0x12
+   \   00000002   7F08               ANDI    R16, 0xF8
+   \   00000004   BB02               OUT     0x12, R16
+    222            _delay_us(DELAY);
+   \   00000006   E00D               LDI     R16, 13
+   \   00000008   950A               DEC     R16
+   \   0000000A   F7F1               BRNE    $-2
+   \   0000000C   0000               NOP
+    223            return (~PINX_ROW & ROW_MASK);
+   \   0000000E   B300               IN      R16, 0x10
+   \   00000010   9500               COM     R16
+   \   00000012   7F00               ANDI    R16, 0xF0
+   \   00000014   9508               RET
+   \   00000016                      REQUIRE _A_PORTD
+   \   00000016                      REQUIRE _A_PIND
+    224          }
+    225          
+    226          //возвращает true, если удерживается та же кнопка,
+    227          //что и в предыдущем цикле опроса
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    228          unsigned char KEYB_SameKey(void) 
+   \                     KEYB_SameKey:
+    229          {
+    230            PORTX_COL &= ~COL_MASK;
+   \   00000000   B302               IN      R16, 0x12
+   \   00000002   7F08               ANDI    R16, 0xF8
+   \   00000004   BB02               OUT     0x12, R16
+    231            PORTX_COL |= (keyCode & COL_MASK);
+   \   00000006   9100....           LDS     R16, keyCode
+   \   0000000A   7007               ANDI    R16, 0x07
+   \   0000000C   B312               IN      R17, 0x12
+   \   0000000E   2B10               OR      R17, R16
+   \   00000010   BB12               OUT     0x12, R17
+    232            return ((~keyCode & ROW_MASK)&(~PINX_ROW));
+   \   00000012   9100....           LDS     R16, keyCode
+   \   00000016   9500               COM     R16
+   \   00000018   B310               IN      R17, 0x10
+   \   0000001A   9510               COM     R17
+   \   0000001C   2301               AND     R16, R17
+   \   0000001E   7F00               ANDI    R16, 0xF0
+   \   00000020   9508               RET
+   \   00000022                      REQUIRE _A_PORTD
+   \   00000022                      REQUIRE _A_PIND
+    233          }
+    234          
+    235          
+    236          //сканирует клавиатуру
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    237          void KEYB_ScanKey(void) 
+   \                     KEYB_ScanKey:
+    238          {
+    239              unsigned char i;
+    240              for(i = 0; i<SCAN_CYCLES; i++){
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   C001               RJMP    ??KEYB_ScanKey_0
+   \                     ??KEYB_ScanKey_1:
+   \   00000004   9503               INC     R16
+   \                     ??KEYB_ScanKey_0:
+   \   00000006   3003               CPI     R16, 3
+   \   00000008   F500               BRCC    ??KEYB_ScanKey_2
+    241                 PORTX_COL |= COL_MASK;
+   \   0000000A   B312               IN      R17, 0x12
+   \   0000000C   6017               ORI     R17, 0x07
+   \   0000000E   BB12               OUT     0x12, R17
+    242                 if (i == 0) PORTX_COL &= ~(1<<PIN_COL1);
+   \   00000010   2300               TST     R16
+   \   00000012   F409               BRNE    ??KEYB_ScanKey_3
+   \   00000014   9890               CBI     0x12, 0x00
+    243                 if (i == 1) PORTX_COL &= ~(1<<PIN_COL2);
+   \                     ??KEYB_ScanKey_3:
+   \   00000016   3001               CPI     R16, 1
+   \   00000018   F409               BRNE    ??KEYB_ScanKey_4
+   \   0000001A   9891               CBI     0x12, 0x01
+    244                 if (i == 2) PORTX_COL &= ~(1<<PIN_COL3);
+   \                     ??KEYB_ScanKey_4:
+   \   0000001C   3002               CPI     R16, 2
+   \   0000001E   F409               BRNE    ??KEYB_ScanKey_5
+   \   00000020   9892               CBI     0x12, 0x02
+    245                 #ifdef KEYBOARD_4X4
+    246                 if (i == 3) PORTX_COL &= ~(1<<PIN_COL4);
+    247                 #endif
+    248                 _delay_us(DELAY);
+   \                     ??KEYB_ScanKey_5:
+   \   00000022   E01D               LDI     R17, 13
+   \   00000024   951A               DEC     R17
+   \   00000026   F7F1               BRNE    $-2
+   \   00000028   0000               NOP
+    249                 if (~PINX_ROW & ROW_MASK) {
+   \   0000002A   B310               IN      R17, 0x10
+   \   0000002C   9510               COM     R17
+   \   0000002E   7F10               ANDI    R17, 0xF0
+   \   00000030   2311               TST     R17
+   \   00000032   F341               BREQ    ??KEYB_ScanKey_1
+    250                   keyCode = PINX_ROW & ROW_MASK;
+   \   00000034   B300               IN      R16, 0x10
+   \   00000036   7F00               ANDI    R16, 0xF0
+   \   00000038   9300....           STS     keyCode, R16
+    251                   keyCode |= PORTX_COL & COL_MASK;
+   \   0000003C   B302               IN      R16, 0x12
+   \   0000003E   7007               ANDI    R16, 0x07
+   \   00000040   9110....           LDS     R17, keyCode
+   \   00000044   2B10               OR      R17, R16
+   \   00000046   9310....           STS     keyCode, R17
+    252                   return;
+    253                 }
+    254              }
+    255          }
+   \                     ??KEYB_ScanKey_2:
+   \   0000004A   9508               RET
+   \   0000004C                      REQUIRE _A_PORTD
+   \   0000004C                      REQUIRE _A_PIND
+    256          
+    257          
+    258          
+    259          //ищет символьный код кнопки по таблице
+    260          //обновляет значения флагов
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    261          void KEYB_FindKey(void) 
+   \                     KEYB_FindKey:
+    262          {
+    263            unsigned char index;
+    264            for (index = 0; index < KEYS; index++) {
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   C001               RJMP    ??KEYB_FindKey_0
+   \                     ??KEYB_FindKey_1:
+   \   00000004   9503               INC     R16
+   \                     ??KEYB_FindKey_0:
+   \   00000006   300C               CPI     R16, 12
+   \   00000008   F4D8               BRCC    ??KEYB_FindKey_2
+    265              if (read_flash(keyTable [index][0]) == keyCode) {
+   \   0000000A   2F20               MOV     R18, R16
+   \   0000000C   E030               LDI     R19, 0
+   \   0000000E   0F22               LSL     R18
+   \   00000010   1F33               ROL     R19
+   \   00000012   01F9               MOVW    R31:R30, R19:R18
+   \   00000014   ....               SUBI    R30, LOW((-(keyTable) & 0xFFFF))
+   \   00000016   ....               SBCI    R31, (-(keyTable) & 0xFFFF) >> 8
+   \   00000018   9114               LPM     R17, Z
+   \   0000001A   9120....           LDS     R18, keyCode
+   \   0000001E   1712               CP      R17, R18
+   \   00000020   F789               BRNE    ??KEYB_FindKey_1
+    266                keyValue = read_flash(keyTable [index][1]);
+   \   00000022   E010               LDI     R17, 0
+   \   00000024   0F00               LSL     R16
+   \   00000026   1F11               ROL     R17
+   \   00000028   01F8               MOVW    R31:R30, R17:R16
+   \   0000002A   ....               SUBI    R30, LOW((-(keyTable + 1) & 0xFFFF))
+   \   0000002C   ....               SBCI    R31, HIGH((-(keyTable + 1) & 0xFFFF))
+   \   0000002E   9104               LPM     R16, Z
+   \   00000030   9300....           STS     keyValue, R16
+    267                keyDown = 1;
+   \   00000034   E001               LDI     R16, 1
+   \   00000036   9300....           STS     keyDown, R16
+    268                keyNew = 1;
+   \   0000003A   E001               LDI     R16, 1
+   \   0000003C   9300....           STS     keyNew, R16
+    269                return;
+    270              }
+    271            }
+    272          }
+   \                     ??KEYB_FindKey_2:
+   \   00000040   9508               RET
+    273          
+    274          //сбрасывает флаг 
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    275          void KEYB_ClearKey(void) 
+   \                     KEYB_ClearKey:
+    276          {
+    277            keyDown = 0;
+   \   00000000   E000               LDI     R16, 0
+   \   00000002   9300....           STS     keyDown, R16
+    278          }
+   \   00000006   9508               RET
+    279          
+    280          //возвращает код нажатой кнопки
+
+   \                                 In  segment CODE, align 2, keep-with-next
+    281          unsigned char KEYB_GetKey(void)
+   \                     KEYB_GetKey:
+    282          {
+    283            if (keyNew){
+   \   00000000   9100....           LDS     R16, keyNew
+   \   00000004   2300               TST     R16
+   \   00000006   F031               BREQ    ??KEYB_GetKey_0
+    284              keyNew = 0;
+   \   00000008   E000               LDI     R16, 0
+   \   0000000A   9300....           STS     keyNew, R16
+    285              return keyValue;
+   \   0000000E   9100....           LDS     R16, keyValue
+   \   00000012   9508               RET
+    286            }
+    287            else 
+    288              return EVENT_NULL;
+   \                     ??KEYB_GetKey_0:
+   \   00000014   E000               LDI     R16, 0
+   \   00000016   9508               RET
+    289          }
+    290          
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+       0      2  KEYB_AnyKey
+       0      2  KEYB_ClearKey
+       0      2  KEYB_FindKey
+       0      2  KEYB_GetKey
+       0      2  KEYB_Init
+       0      2  KEYB_SameKey
+       0      2  KEYB_ScanKey
+       0      2  KEYB_ScanKeyboard
+                   0 2 -> KEYB_AnyKey
+                   0 2 -> KEYB_ClearKey
+                   0 2 -> KEYB_FindKey
+                   0 2 -> KEYB_SameKey
+                   0 2 -> KEYB_ScanKey
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      22  KEYB_AnyKey
+       8  KEYB_ClearKey
+      66  KEYB_FindKey
+      24  KEYB_GetKey
+      56  KEYB_Init
+      34  KEYB_SameKey
+      76  KEYB_ScanKey
+     100  KEYB_ScanKeyboard
+       1  _A_DDRD
+       1  _A_PIND
+       1  _A_PORTD
+       1  keyCode
+       1  keyDown
+       1  keyNew
+       1  keyState
+      24  keyTable
+       1  keyValue
+       6  -- Other
+
+ 
+   3 bytes in segment ABSOLUTE
+ 386 bytes in segment CODE
+   6 bytes in segment INITTAB
+  24 bytes in segment NEAR_F
+   5 bytes in segment TINY_Z
+ 
+ 410 bytes of CODE memory (+ 6 bytes shared)
+   5 bytes of DATA memory (+ 3 bytes shared)
+
+Errors: none
+Warnings: 1

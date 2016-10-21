@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<project>
+  <fileVersion>2</fileVersion>
+  <fileChecksum>852371839</fileChecksum>
+  <configuration>
+    <name>Debug</name>
+    <outputs>
+      <file>$TOOLKIT_DIR$\lib\clib\cl1s-ec_mul.r90</file>
+      <file>$PROJ_DIR$\Debug\Obj\keyboard.pbd</file>
+      <file>$PROJ_DIR$\Debug\Obj\keyboard.r90</file>
+      <file>$PROJ_DIR$\Debug\Obj\keyboard.pbi</file>
+      <file>$PROJ_DIR$\Debug\List\main.lst</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.r90</file>
+      <file>$PROJ_DIR$\usart.c</file>
+      <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
+      <file>$PROJ_DIR$\Debug\Obj\usart.r90</file>
+      <file>$PROJ_DIR$\Debug\Exe\keyboard.hex</file>
+      <file>$TOOLKIT_DIR$\src\template\cfgm8.xcl</file>
+      <file>$TOOLKIT_DIR$\inc\iomacro.h</file>
+      <file>$PROJ_DIR$\Debug\List\usart.lst</file>
+      <file>$TOOLKIT_DIR$\src\template\cfg1soim.xcl</file>
+      <file>$PROJ_DIR$\keyboard.c</file>
+      <file>$PROJ_DIR$\usart.h</file>
+      <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+      <file>$PROJ_DIR$\Debug\Obj\usart.pbi</file>
+      <file>$TOOLKIT_DIR$\inc\ioavr.h</file>
+      <file>$PROJ_DIR$\main.c</file>
+      <file>$PROJ_DIR$\Debug\List\keyboard.lst</file>
+      <file>$PROJ_DIR$\keyboard.h</file>
+      <file>$PROJ_DIR$\Debug\Exe\keyboard.d90</file>
+      <file>$TOOLKIT_DIR$\inc\iom8.h</file>
+    </outputs>
+    <file>
+      <name>$PROJ_DIR$\Debug\Obj\keyboard.pbd</name>
+      <inputs>
+        <tool>
+          <name>BILINK</name>
+          <file> 3 7</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\usart.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 8 12</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 17</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 15 18 23 11 16</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 15 18 23 11 16</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\keyboard.hex</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 10 13 2 5 0</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>[ROOT_NODE]</name>
+      <outputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 9</file>
+        </tool>
+      </outputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\keyboard.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 2 20</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 3</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 21 18 23 11</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 21 18 23 11</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\main.c</name>
+      <outputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 5 4</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 7</file>
+        </tool>
+      </outputs>
+      <inputs>
+        <tool>
+          <name>ICCAVR</name>
+          <file> 18 23 11 16 21</file>
+        </tool>
+        <tool>
+          <name>BICOMP</name>
+          <file> 18 23 11 16 21</file>
+        </tool>
+      </inputs>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\Debug\Exe\keyboard.d90</name>
+      <inputs>
+        <tool>
+          <name>XLINK</name>
+          <file> 10 13 2 5 0</file>
+        </tool>
+      </inputs>
+    </file>
+  </configuration>
+  <configuration>
+    <name>Release</name>
+    <outputs/>
+    <forcedrebuild>
+      <name>[MULTI_TOOL]</name>
+      <tool>XLINK</tool>
+    </forcedrebuild>
+  </configuration>
+</project>
+
+

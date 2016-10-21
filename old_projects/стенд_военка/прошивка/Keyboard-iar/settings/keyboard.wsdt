@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>keyboard/Debug</Project><Project>keyboard/Debug</Project></CurrentConfigs><CurrentProj>keyboard</CurrentProj><OverviewSelected>0</OverviewSelected></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>144</Column0><Column1>27</Column1><Column2>27</Column2><Column3>27</Column3></ColumnWidths>
+      </Workspace>
+    <Build><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>915</ColumnWidth1><ColumnWidth2>244</ColumnWidth2><ColumnWidth3>61</ColumnWidth3></Build></Static>
+    <Windows>
+      
+    <Wnd0>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-24530-12257</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>keyboard</ExpandedNode><ExpandedNode>keyboard/keyboard.c</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd0><Wnd2><Tabs><Tab><Identity>TabID-12906-10650</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd2></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\main.c</Filename><XPos>0</XPos><YPos>21</YPos><SelStart>977</SelStart><SelEnd>1168</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\keyboard.c</Filename><XPos>0</XPos><YPos>6</YPos><SelStart>1915</SelStart><SelEnd>1915</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\keyboard.h</Filename><XPos>0</XPos><YPos>12</YPos><SelStart>448</SelStart><SelEnd>448</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 5.0 Evaluation\avr\INC\ioavr.h</Filename><XPos>0</XPos><YPos>246</YPos><SelStart>6469</SelStart><SelEnd>6469</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>C:\Program Files\IAR Systems\Embedded Workbench 5.0 Evaluation\avr\inc\iom8.h</Filename><XPos>0</XPos><YPos>129</YPos><SelStart>5583</SelStart><SelEnd>5598</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\List\keyboard.lst</Filename><XPos>0</XPos><YPos>264</YPos><SelStart>6521</SelStart><SelEnd>6521</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\usart.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>93</SelStart><SelEnd>254</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\usart.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>168</SelStart><SelEnd>168</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard\Debug\Obj\keyboard.r90</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>0</SelStart><SelEnd>0</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard2\usart.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>509</SelStart><SelEnd>509</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard2\keyboard.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>408</SelStart><SelEnd>408</SelEnd></Tab><ActiveTab>10</ActiveTab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard2\main.c</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>625</SelStart><SelEnd>625</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>D:\AVR_PROJ_ALL\IAR\Keyboard2\keyboard.h</Filename><XPos>0</XPos><YPos>0</YPos><SelStart>641</SelStart><SelEnd>641</SelEnd></Tab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-012991e0><key>iaridepm.enu1</key></Toolbar-012991e0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd0><Rect><Top>-2</Top><Left>-2</Left><Bottom>482</Bottom><Right>218</Right><x>-2</x><y>-2</y><xscreen>-1331426</xscreen><yscreen>-1073728</yscreen><sizeHorzCX>-1040176562</sizeHorzCX><sizeHorzCY>-1483049723</sizeHorzCY><sizeVertCX>171875</sizeVertCX><sizeVertCY>668508</sizeVertCY></Rect></Wnd0></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>198</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>200</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>276243</sizeHorzCY><sizeVertCX>156250</sizeVertCX><sizeVertCY>276243</sizeVertCY></Rect></Wnd2></Sizes></Row0></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+

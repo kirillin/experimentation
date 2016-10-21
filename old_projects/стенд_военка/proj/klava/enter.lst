@@ -1,0 +1,58 @@
+   1               		.file	"enter.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	main
+  18               	main:
+  19               	.LFB6:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 00D0      		rcall lcd_init
+  25               	.LM3:
+  26 0002 00D0      		rcall init_klav
+  27               	.L3:
+  28               	.LM4:
+  29 0004 00D0      		rcall skan_klav
+  30               	.LM5:
+  31 0006 9091 0000 		lds r25,klav
+  32 000a 8091 0000 		lds r24,klav_pr
+  33 000e 8917      		cp r24,r25
+  34 0010 01F0      		breq .L2
+  35               	.LM6:
+  36 0012 9923      		tst r25
+  37 0014 01F0      		breq .L2
+  38 0016 892F      		mov r24,r25
+  39 0018 00D0      		rcall lcd_dat
+  40               	.L2:
+  41               	.LM7:
+  42 001a 8091 0000 		lds r24,klav
+  43 001e 8093 0000 		sts klav_pr,r24
+  44 0022 00C0      		rjmp .L3
+  45               	.LFE6:
+  47               		.comm klav,1,1
+  48               		.comm klav_pr,1,1
+  73               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 enter.c
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\9335~1\LOCALS~1\Temp/ccEL7gi6.s:18     .text:00000000 main
+                            *COM*:00000001 klav
+                            *COM*:00000001 klav_pr
+
+UNDEFINED SYMBOLS
+lcd_init
+init_klav
+skan_klav
+lcd_dat
+__do_clear_bss
