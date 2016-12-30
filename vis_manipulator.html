@@ -40,17 +40,17 @@
 <body>
     <div style="width: 350px; height: 800px; border: 0px solid red; position: absolute; top: 10px; left: 10px;">
             q1 [deg] <input type="text" id="o1value" value="0" />
-            <input type="range" id="o1" name="points" min="-180" max="180" value="90" oninput="updateO1(this.value)" />
+            <input type="range" id="o1" name="points" min="-180" max="180" value="0" oninput="updateO1(this.value)" />
             q2 [deg]<input type="text" id="o2value" value="0" />
-            <input type="range" id="o2" name="points" min="-180" max="180" value="-90" onchange="updateO2(this.value)" />
+            <input type="range" id="o2" name="points" min="-180" max="180" value="0" onchange="updateO2(this.value)" />
             q3 [deg]<input type="text" id="o3value" value="0" />
-            <input type="range" id="o3" name="points" min="-180" max="180" value="90" onchange="updateO3(this.value)" />
+            <input type="range" id="o3" name="points" min="-180" max="180" value="0" onchange="updateO3(this.value)" />
             q4 [deg]<input type="text" id="o4value" value="0" />
-            <input type="range" id="o4" name="points" min="-180" max="180" value="-90" onchange="updateO4(this.value)" />
+            <input type="range" id="o4" name="points" min="-180" max="180" value="0" onchange="updateO4(this.value)" />
             q5 [deg]<input type="text" id="o5value" value="0" />
             <input type="range" id="o5" name="points" min="-180" max="180" value="90" onchange="updateO5(this.value)" />
             q6 [deg]<input type="text" id="o6value" value="0" />
-            <input type="range" id="o6" name="points" min="-180" max="180" value="-90" onchange="updateO6(this.value)" />
+            <input type="range" id="o6" name="points" min="-180" max="180" value="0" onchange="updateO6(this.value)" />
             
             <div style="width: 400px; position: absolute; top: 0px; left: 400px;">
                 <canvas id="myCanvasXY" width="400" height="400" style="border: 1px solid black;"></canvas>
@@ -155,6 +155,101 @@
 
             function mvTranslate(v) {
                 multMatrix(Matrix.Translation($V([v[0], v[1], v[2]])).ensure4x4());
+            }
+
+            l = 10;   
+            angle = 90;
+            di =  new Array(0, 0, 2*l, 0, 2*l);
+            ai =  new Attay(0, l, 0, 0, 0, 0);
+            alpha = new Array(angle, 0, -angle, angle, -angle, 0);
+
+            function forward(qs, n) {
+
+                H = [
+                    [1,0,0,0],
+                    [0,1,0,0],
+                    [0,0,1,0],
+                    [0,0,0,1]
+                ];
+                for (var i = 0; i < n-1; i++) {
+                    c_t = Math.cos(qs[i]);
+                    s_t = Math.sin(qs[i]);
+                    d = di[i];
+                    a = ai[i];
+                    c_a = Math.cos(alpha[i]);
+                    s_a = Math.sin(alpha[i]);
+
+
+                    Rtz = [
+                        c_t -s_t 0 0;
+                        s_t c_t 0 0;
+                        0 0 1 0;
+                        0 0 0 1
+                    ];
+                    Tz = [
+                        1 0 0 0;
+                        0 1 0 0;
+                        0 0 1 d;
+                        0 0 0 1
+                    ];
+                    Tx = [
+                        1 0 0 a;
+                        0 1 0 0;
+                        0 0 1 0;
+                        0 0 0 1
+                    ];
+                    Rtx = [
+                        1 0 0 0;
+                        0 c_a -s_a 0;
+                        0 s_a c_a 0;
+                        0 0 0 1
+                    ];
+
+                    A = Rtz * Tz * Tx * Rtx;
+                    H = H * A;    
+                }
+                return H;
+            }
+            
+            function copyMatrix(H,i1,i2,j1,j2) {
+                rows = i2 - i1;
+                cols = j2 - j1;
+                R = new Array();
+                for (var i = i1; i <= i2; i++) {
+                    R[i] = new Array();
+                    for (var j = j1; j <= j2; j++) {
+                        R[i][j] = H[i][j];
+                    }
+                }
+                return R;
+            }
+
+            function inverse(H) {
+                
+                R06 = copyMatrix(H,0,2,0,2);
+                o06 = copyMatrix(H,0,2,3,3);
+                
+                oc = o06 - d(6)*R06*[0; 0; 1];
+                xc = oc(1);
+                yc = oc(2);
+                zc = oc(3);
+                % q1 - theta 1
+                if ((xc ~= 0) && (yc ~= 0))
+                    q1(1) = atan2(yc, xc);
+                    q1(2) = pi + atan2(yc, xc);
+                end
+                % q3 - theta 3
+                s = zc - d(1);
+                r = sqrt(xc^2 + yc^2);
+                D = (s^2 + r^2 - a(2)^2 - 4 * a(2)^2) / (4*a(2)^2);
+                q3(1) = atan2(-sqrt(1 - D^2), D) + al(3);
+                q3(2) = atan2(sqrt(1 - D^2), D) + al(3);
+                
+            %    q2(1) = atan2(s, r) - atan2(2*a(2)*sin(q3(1)), a(2) + 2*a(2)*cos(q3(1)));
+            %    q2(2) = atan2(s, r) - atan2(2*a(2)*sin(q3(2)), a(2) + 2*a(2)*cos(q3(2)));
+
+                q2(1) = atan2(s, r) - atan2(-2*a(2)*cos(q3(1)), a(2) - 2*a(2)*sin(q3(1)));
+                q2(2) = atan2(s, r) - atan2(2*a(2)*cos(q3(2)), a(2) - 2*a(2)*sin(q3(2)));    
             }
 
             function setMatrixUniforms() {

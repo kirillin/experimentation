@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = #1053#1072#1095#1072#1083#1100#1085#1072#1103' '#1080#1076#1077#1085#1090#1080#1092#1080#1082#1072#1094#1080#1103' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1103
+  Caption = #1054#1082#1085#1086' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
   ClientHeight = 201
   ClientWidth = 481
   Color = clBtnFace
@@ -12,6 +12,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

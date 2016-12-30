@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Math, Unit3;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Math;
 
 type
   TForm1 = class(TForm)
@@ -25,6 +25,7 @@ type
     procedure Edit1Click(Sender: TObject);
     procedure Edit2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,7 +34,7 @@ type
 
 var
   Form1: TForm1;
-  Form3: TForm3;
+
   authPhrase: string;
   time, totalSymbols: longint;
   firstTick, currentTick: TDateTime;
@@ -42,6 +43,9 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Unit3;
+
 
 procedure init();
 begin
@@ -65,13 +69,13 @@ begin
   login := Form1.Edit3.Text;
   AssignFile(f, 'params.' + login); rewrite(f);
   writeln(f, firstText);
-  writeln(f, totalTime);
-  writeln(f, speed);
+//  writeln(f, totalTime);
+//  writeln(f, speed);
   writeln(f, avgTotalTime);
   Writeln(f, avgSpeed);
   CloseFile(f);
   Form1.Close;
-  Form3.Show;
+  Form3.Visible := true;
 end;
 
 procedure TForm1.Edit1Click(Sender: TObject);
@@ -106,6 +110,14 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Form1.Edit1.Clear;
+  Form1.Edit2.Clear;
+  Form1.Edit3.Clear;
+  init();
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
 begin
   Form1.Edit1.Clear;
   Form1.Edit2.Clear;

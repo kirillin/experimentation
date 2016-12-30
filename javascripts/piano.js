@@ -149,7 +149,7 @@ piano.createKeyboard = function() {
 
 /*
  * CONNECTION POOL
- * v-1.alpha
+ * v.alpha
 */
 
 var ConnectionPool = new Object();
