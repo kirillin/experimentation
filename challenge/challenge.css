@@ -1,0 +1,137 @@
+* {
+margin: 0px;
+padding: 0px;
+}
+body {
+font-family: 'Slabo 27px', serif; 
+margin: 0;
+}
+h1 {
+font-size: 36pt;
+margin: 1% 0; 
+color: black;
+border: 0px solid #111;
+}
+h2 {
+margin-top: 0;
+}
+hr {
+margin: 0 30%; 
+margin-top: 2%;
+margin-bottom: 2%;
+width: 40%;
+color: black;
+}
+form {
+margin: 0; 
+margin-top: 2%;
+margin-bottom: 2%;
+width: 100%;
+color: black;
+font-size: 12pt;   	
+}
+#user-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#header {
+background: #fff;
+text-align: center;
+padding: 0;
+margin: 0; 
+}
+.cnt { 
+width: 100%;
+padding: 0;
+margin: 0;
+border: 0px solid #111;
+font-size: 200px;
+text-align: center;
+}
+.title {
+width: 100%;
+border: px solid #111;
+font-size: 40px;
+text-align: center;
+padding-top: 0;
+margin-top: -5%;
+border-bottom: 0px solid green;
+}
+.items {
+width: 100%;
+border: 0px solid green;
+font-family: 'Kurale', serif;
+}
+.status {
+float: left;
+color: white;
+width: 0%;
+font-size: 19px;
+text-align: right;
+font-style: oblique;
+}
+
+.name {
+float: left;
+margin-top: 5px;
+width: 69%;
+font-size: 20px;
+text-align: right;
+-moz-text-decoration-color: red;
+
+}
+.date  {
+float: left;
+margin-top: 5px;
+padding-top: 4px;
+padding-left: 5px;
+width: 30%;
+font-size: 15px;
+text-align: left;
+color: silver;
+}
+
+#left { /* Левая колонка */
+float: left;
+width: 49.77%;
+padding: 0; /* Поля вокруг текста */
+margin: 0; /* Значения отступов */
+border-right: 2px solid #111; /* Параметры рамки вокруг */
+}
+#right { /* Правая колонка */
+float: left;
+width: 50%;
+margin: 0; /* Значения отступов */
+padding: 0; /* Поля вокруг текста */
+border: 0px solid #111; /* Параметры рамки */
+}
+#footer { /* Нижний блок */
+background: #fff; /* Цвет фона */
+padding: 5px; /* Поля вокруг текста */
+color: #000; /* Цвет текста */
+clear: left; /* Отменяем действие float */
+}
+#submit {
+float: left;
+color: red;
+background-color: white;
+border: 0px solid #000;
+text-align: center;
+padding: 0;
+font-size: 25px;
+width: 29.6%;
+height: 25px;
+background-color: black;
+color: white; 
+}
+#input {
+float: left;
+color: silver;
+background-color: white;
+border: 1px solid #fff;
+border-top: 1px solid #000;
+border-bottom: 1px solid #000;
+text-align: center;
+width: 70%
+}   
