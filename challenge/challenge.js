@@ -31,7 +31,7 @@ Challenge.prototype.initFirebase = function() {
 	this.auth = firebase.auth();
 	this.database = firebase.database();
 	this.storage = firebase.storage();
-  this.loadData();
+  
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
@@ -59,6 +59,7 @@ Challenge.prototype.loadData = function() {
 };
 
 Challenge.prototype.onAuthStateChanged = function(user) {
+
    if (user) {
     var profilePicUrl = user.photoURL;
     var userName = user.displayName;
@@ -71,7 +72,7 @@ Challenge.prototype.onAuthStateChanged = function(user) {
     this.signOutButton.removeAttribute('hidden');
 
     this.signInButton.setAttribute('hidden', 'true');
-
+    this.loadData();
    } else {
     this.userName.setAttribute('hidden', 'true');
     this.userPic.setAttribute('hidden', 'true');
@@ -85,7 +86,8 @@ Challenge.prototype.checkSignedInWithMessage = function() {
   if (this.auth.currentUser) {
     if (this.auth.currentUser.displayName != 'Rustam Mukin') {
       console.log('You are not Rustam, sorry you can only see on this!')
-    }    
+    }
+
     return true;
   }
   var data = {
