@@ -7,25 +7,50 @@ function Challenge() {
   this.photosets = document.getElementById('purpose-id-1');
   this.photosets.cnt = this.photosets.getElementsByClassName('cnt')[0];
   this.photosets.title = this.photosets.getElementsByClassName('title')[0];
-  this.photosets.buttor = this.photosets.getElementsByClassName('submit')[0];
-  
+  this.photosets.button = this.photosets.getElementsByClassName('date')[0];
+  this.photosets.input = this.photosets.getElementsByClassName('name')[0];
 
   this.books = document.getElementById('purpose-id-2');
   this.books.cnt = this.books.getElementsByClassName('cnt')[0];
   this.books.title = this.books.getElementsByClassName('title')[0];
-  this.books.buttor = this.books.getElementsByClassName('submit')[0];
+  this.books.button = this.books.getElementsByClassName('date')[0];
+  this.books.input = this.books.getElementsByClassName('name')[0];
 
 	this.userPic = document.getElementById('user-pic');
 	this.userName = document.getElementById('user-name');
 	this.signInButton = document.getElementById('sign-in');
 	this.signOutButton = document.getElementById('sign-out');
 
-	this.signOutButton.addEventListener('click', this.signOut.bind(this));
+  this.photosets.button.addEventListener('click', this.saveData.bind(this));
+  this.books.button.addEventListener('click', this.saveData.bind(this));
+  
+
+  this.books.input.addEventListener('click', this.clear.bind(this));
+  this.photosets.input.addEventListener('click', this.clear.bind(this));
+
+	
+  this.photosets.cnt.addEventListener('click', this.visibleOn.bind(this));
+  this.books.cnt.addEventListener('click', this.visibleOn.bind(this));
+  
+  this.signOutButton.addEventListener('click', this.signOut.bind(this));
 	this.signInButton.addEventListener('click', this.signIn.bind(this));
 
 	this.initFirebase();
 };
 
+Challenge.prototype.clear = function(e) {
+  e.toElement.value = "";
+}
+
+Challenge.prototype.visibleOn = function(e) {
+  var f = e.toElement.parentNode.getElementsByTagName('form')[0];
+  f.hidden = false;
+}
+
+Challenge.prototype.visibleOff = function(e) {
+  var f = e.toElement.parentNode;
+  f.hidden = true;
+}
 
 Challenge.prototype.initFirebase = function() {
 	this.auth = firebase.auth();
@@ -47,15 +72,29 @@ Challenge.prototype.signOut = function() {
 };
 
 Challenge.prototype.loadData = function() {
-  this.messagesRef = this.database.ref('purposes');
-  this.messagesRef.off();
+  this.dataRef = this.database.ref('purposes');
+  this.dataRef.off();
 
   var setData = function(data) {
     var val = data.val();
     this.displayData(data.key, val.cnt, val.title, val.items);
   }.bind(this);
-  this.messagesRef.limitToLast(10).on('child_added', setData);
-  //this.messagesRef.limitToLast(10).on('child_changed', setData);
+  this.dataRef.limitToLast(10).on('child_added', setData);
+  //this.dataRef.limitToLast(10).on('child_changed', setData);
+};
+
+Challenge.prototype.saveData = function(e) {
+ this.visibleOff(e);
+ e.preventDefault();
+
+  if (this.photosets.input.value && this.checkSignedInWithMessage()) {
+    console.log("save OK");
+  }
+};
+
+Challenge.resetMaterialTextfield = function(element) {
+  element.value = '';
+  element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 };
 
 Challenge.prototype.onAuthStateChanged = function(user) {
