@@ -28,9 +28,11 @@ function Challenge() {
     this.inputfeild = document.getElementById('inputfeild');
     this.txtarea = document.getElementById('txtarea');
     this.txtbut = document.getElementById('txtbut');
+    this.txtbutclose = document.getElementById('txtbut-close');
 
     this.txtbut.addEventListener('click', this.saveData.bind(this));
     this.txtarea.addEventListener('click', this.clear.bind(this));
+    this.txtbutclose.addEventListener('click', this.close.bind(this));
 
     this.signOutButton.addEventListener('click', this.signOut.bind(this));
     this.signInButton.addEventListener('click', this.signIn.bind(this));
@@ -40,6 +42,10 @@ function Challenge() {
 
 Challenge.prototype.clear = function (e) {
     e.toElement.value = "";
+}
+
+Challenge.prototype.close = function (e) {
+    this.visibleOff();
 }
 
 Challenge.prototype.visibleOn = function (e) {
@@ -82,7 +88,11 @@ Challenge.prototype.loadData = function () {
 
     var setData = function (data) {
         var val = data.val();
-        this.displayData(data.key, val.cnt, val.title, val.items);
+        if (val.items) {
+          this.displayData(data.key, val.cnt, val.title, val.items);
+        } else {
+          this.displayData(data.key, val.cnt, val.title, 0);
+        }
     }.bind(this);
     this.dataRef.limitToLast(10).on('child_added', setData);
 };
@@ -98,17 +108,18 @@ Challenge.prototype.saveCnt = function (id, cnt) {
     // updates[id + '/' + postkey] = postData;
     // this.database.ref().update(updates);
 }
+Challenge.buf = '';
 
 Challenge.prototype.saveData = function (e) {
     this.visibleOff(e);
     e.preventDefault();
     var d = new Date();
-    var dat = d.toUTCString().substr(5, 11);
+    var dat = d.toUTCString().substr(5, 20);
     var postData = {
         date: dat,
         name: this.txtarea.value
     };
-    if (this.txtarea.value && this.checkSignedInWithMessage()) {
+    if (this.txtarea.value.trim() && this.checkSignedInWithMessage()) {
         var currentUser = this.auth.currentUser;
         var getCnt = function (snapshot) {
             //this.saveCnt(this.involv.id, snapshot);
@@ -126,6 +137,18 @@ Challenge.prototype.saveData = function (e) {
         }.bind(this);
         this.database.ref('/purposes/' + this.involv.id + '/items').push(postData);
         this.database.ref('/purposes/' + this.involv.id).once('value').then(getCnt);
+    } else {
+      console.log('no data in text area!')
+      var src = document.getElementById('msg');
+      this.buf = src.textContent;
+      src.textContent = 'ничего не сделал?? -_-';
+      src.style.color = 'red';
+      setTimeout(
+        function(e) {
+          var src = document.getElementById('msg');
+          src.textContent = this.buf;  
+          src.style.color = 'black';  
+      }.bind(this), 2000);
     }
     this.loadData();
 };
@@ -194,10 +217,8 @@ Challenge.ITEM_TEMPLATE =
 
 Challenge.ROW_TEMPLATE =
     '<td class="dsc"></td>' +
-    '<td class="num">^_^</td>' +
+    '<td class="num"></td>' +
     '<td class="dat"></td>';
-
-
 
 Challenge.prototype.displayData = function (key, cnt, title, items) {
     var div = document.getElementById(key);
@@ -219,7 +240,7 @@ Challenge.prototype.displayData = function (key, cnt, title, items) {
                 var num = item.getElementsByClassName('num')[0];
                 n.textContent = items[key].name;
                 d.textContent = items[key].date;
-                num.textContent = '^_^';
+                num.innerHTML = '&#10004;';
                 page_items.appendChild(item);
             }
         }
