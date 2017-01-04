@@ -1,133 +1,201 @@
 * {
-margin: 0px;
-padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 body {
-font-family: 'Slabo 27px', serif; 
-margin: 0;
+    font-family: 'Slabo 27px', serif;
+    margin: 0;
 }
 h1 {
-font-size: 36pt;
-margin: 1% 0; 
-color: black;
-border: 0px solid #111;
+    font-size: 36pt;
+    margin: 1% 0;
+    color: black;
+    border: 0px solid #111;
 }
 h2 {
-margin-top: 0;
+    margin-top: 0;
 }
 hr {
-margin: 0 30%; 
-margin-top: 2%;
-margin-bottom: 2%;
-width: 40%;
-color: black;
+    margin: 0 30%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 40%;
+    color: black;
 }
 form {
-margin: 0; 
-margin-top: 2%;
-margin-bottom: 2%;
-width: 100%;
-color: black;
-font-size: 12pt;   	
+    margin: 0;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100%;
+    color: black;
+    font-size: 12pt;
+}
+#fog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
 }
 #user-container {
-  position: absolute;
-  top: 0;
-  left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 #header {
-background: #fff;
-text-align: center;
-padding: 0;
-margin: 0; 
+    background: #fff;
+    text-align: center;
+    padding: 0;
+    margin: 0;
 }
-.cnt { 
-width: 100%;
-padding: 0;
-margin: 0;
-border: 0px solid #111;
-font-size: 200px;
-text-align: center;
+.cnt {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0px solid #111;
+    font-size: 200px;
+    text-align: center;
 }
 .title {
-width: 100%;
-border: 0px solid #111;
-font-size: 40px;
-text-align: center;
-padding-top: 0;
-margin-top: -2%;
-border-bottom: 0px solid green;
+    width: 100%;
+    border: 0px solid #111;
+    font-size: 40px;
+    text-align: center;
+    padding-top: 0;
+    margin-top: -2%;
+    border-bottom: 0px solid green;
 }
 .items {
-width: 100%;
-border: 0px solid green;
-font-family: 'Kurale', serif;
+    width: 100%;
+    border: 0px solid green;
+    font-family: 'Kurale', serif;
 }
 .status {
-width: 0;
-padding: 0;
+    width: 0;
+    padding: 0;
 }
 .name {
-float: left;
-margin-top: 5px;
-width: 49%;
-height: 25px;
-line-height: 25px;
-font-size: 20px;
-text-align: right;
+    float: left;
+    margin-top: 5px;
+    width: 49%;
+    height: 25px;
+    line-height: 25px;
+    font-size: 20px;
+    text-align: right;
 }
-.date  {
-float: right;
-margin-top: 5px;
-padding-left: 1%;
-width: 49%;
-height: 25px;
-line-height: 25px;
-font-size: 12px;
-text-align: left;
-color: green;
+.date {
+    float: right;
+    margin-top: 5px;
+    padding-left: 1%;
+    width: 49%;
+    height: 25px;
+    line-height: 25px;
+    font-size: 12px;
+    text-align: left;
+    color: green;
 }
-
 #left {
-float: left;
-width: 49.77%;
-padding: 0;
-margin: 0; 
-border-right: 2px solid #111; 
+    float: left;
+    width: 49.77%;
+    padding: 0;
+    margin: 0;
+    border-right: 2px solid #111;
 }
 #right {
-float: left;
-width: 50%;
-margin: 0; 
-padding: 0;
-border: 0px solid #111;
+    float: left;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    border: 0px solid #111;
 }
 #footer {
-background: #fff;
-padding: 5px;
-color: #000;
-clear: left; 
+    background: #fff;
+    padding: 5px;
+    color: #000;
+    clear: left;
 }
 #submit {
-float: left;
-color: red;
-background-color: white;
-border: 1px solid #000;
-text-align: center;
-padding: 0;
-font-size: 25px;
-width: 49.6%;
-height: 25px;
-background-color: black;
-color: white; 
+    float: left;
+    color: red;
+    background-color: white;
+    border: 1px solid #000;
+    text-align: center;
+    padding: 0;
+    font-size: 25px;
+    width: 49.6%;
+    height: 25px;
+    background-color: black;
+    color: white;
 }
 #input {
-float: left;
-color: silver;
-background-color: white;
-border: 1px solid #fff;
-border-top: 1px solid #000;
-border-bottom: 1px solid #000;
-text-align: center;
-width: 50%
-}   
+    float: left;
+    color: silver;
+    background-color: white;
+    border: 1px solid #fff;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    width: 50%
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+td {
+    background: #fff;
+    text-align: center;
+}
+th,
+td {
+    border: 0px solid black;
+    padding: 4px;
+    vertical-align: middle;
+}
+tr {
+    width: 80px;
+    border-bottom: 1px solid silver;
+}
+.dsc {
+    width: 49%;
+    text-align: right;
+    word-break: break-word;
+}
+.dat {
+    width: 49%;
+    text-align: left;
+    word-break: break-all;
+    border-left: 1px solid pink;
+}
+.num {
+    width: 2%;
+    text-align: center;
+    color: pink;
+}
+#inputfeild {
+    position: absolute;
+    z-index: 42;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    text-align: center;
+}
+#txtarea {
+    width: 90%;
+    height: 50%;
+    margin: 5% 50%;
+    transform: translate(-50%);
+    border: 1px solid black;
+    text-align: center;
+}
+#txtbut {
+    width: 90%;
+    height: 10%;
+    border: 1px solid black;
+    background-color: pink;
+}
