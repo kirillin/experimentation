@@ -50,13 +50,15 @@ form {
     padding: 0;
     margin: 0;
 }
-.cnt {
+.cnt-b {
     width: 100%;
     padding: 0;
-    margin: 0;
+    margin-top: -70px;
+    margin-bottom: -20px;
     border: 0px solid #111;
     font-size: 200px;
     text-align: center;
+    color: black;
 }
 .title {
     width: 100%;
@@ -101,14 +103,14 @@ form {
     width: 49.77%;
     padding: 0;
     margin: 0;
-    border-right: 2px solid #111;
+    border-right: 0px solid #111;
 }
 #right {
     float: left;
     width: 50%;
     margin: 0;
     padding: 0;
-    border: 0px solid #111;
+    border-left: 2px solid #111;
 }
 #footer {
     background: #fff;
@@ -214,4 +216,13 @@ tr {
     color: #ddd;
     font-family: 'Slabo 27px', serif;
     font-size: 14pt;
+}
+#msg {
+    font-family: 'Slabo 27px', serif;
+    font-size: 36pt;
+    font-weight: bold;
+    margin: 1% 0;
+    color: black;
+    border: 0px solid #111;
+
 }

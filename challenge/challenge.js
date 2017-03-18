@@ -1,4 +1,12 @@
 'use strict';
+var config = {
+    apiKey: "AIzaSyCeDBulZRsr8dyCbLiOrkxnCWndjwGnPlg",
+    authDomain: "challenge-e0a93.firebaseapp.com",
+    databaseURL: "https://challenge-e0a93.firebaseio.com",
+    storageBucket: "challenge-e0a93.appspot.com",
+    messagingSenderId: "389544971664"
+};
+firebase.initializeApp(config);
 
 function Challenge() {
     this.checkSetup();
@@ -49,11 +57,15 @@ Challenge.prototype.close = function (e) {
 }
 
 Challenge.prototype.visibleOn = function (e) {
-    var f = document.getElementById('inputfeild');
-    f.hidden = false;
-    var g = document.getElementById('fog');
-    g.hidden = false;
-    this.involv = e.srcElement.parentNode;
+    if (this.checkSignedInWithMessage()) {
+        var f = document.getElementById('inputfeild');
+        f.hidden = false;
+        var g = document.getElementById('fog');
+        g.hidden = false;
+        this.involv = e.srcElement.parentNode;
+    } else {
+        console.log('YOU ARE NOT RUSTAM!!  FU!')
+    }
 }
 
 Challenge.prototype.visibleOff = function (e) {
@@ -67,15 +79,19 @@ Challenge.prototype.initFirebase = function () {
     this.auth = firebase.auth();
     this.database = firebase.database();
     this.storage = firebase.storage();
-
     this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
 Challenge.prototype.signIn = function () {
     var provider = new firebase.auth.GoogleAuthProvider();
     this.auth.signInWithPopup(provider);
-    console.log("singin");
 };
+
+firebase.auth().signInAnonymously().catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+});
+
 
 Challenge.prototype.signOut = function () {
     this.auth.signOut();
@@ -85,7 +101,6 @@ Challenge.prototype.signOut = function () {
 Challenge.prototype.loadData = function () {
     this.dataRef = this.database.ref('purposes');
     this.dataRef.off();
-
     var setData = function (data) {
         var val = data.val();
         if (val.items) {
@@ -160,41 +175,36 @@ Challenge.resetMaterialTextfield = function (element) {
 };
 
 Challenge.prototype.onAuthStateChanged = function (user) {
-
+    this.loadData();
     if (user) {
-        var profilePicUrl = user.photoURL;
-        var userName = user.displayName;
-
-        this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
-        this.userName.textContent = userName;
-
-        this.userName.removeAttribute('hidden');
-        this.userPic.removeAttribute('hidden');
-        this.signOutButton.removeAttribute('hidden');
-
-        this.signInButton.setAttribute('hidden', 'true');
-        this.loadData();
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        if (isAnonymous) {
+            console.log('Anonymous was entered! ' + uid)
+        } else {
+            var userName = document.getElementById('user-name');
+            userName.textContent = this.auth.currentUser.displayName;
+        }
     } else {
-        this.userName.setAttribute('hidden', 'true');
-        this.userPic.setAttribute('hidden', 'true');
-        this.signOutButton.setAttribute('hidden', 'true');
-
-        this.signInButton.removeAttribute('hidden');
+        console.log('Anonymous was exited! ' + uid)
+        var userName = document.getElementById('user-name');
+        userName.textContent = '';
     }
 };
 
 Challenge.prototype.checkSignedInWithMessage = function () {
     if (this.auth.currentUser) {
-        if (this.auth.currentUser.displayName != 'Rustam Mukin') {
+        if (this.auth.currentUser.displayName == 'Rustam Mukin') {
+            return true;    
+        } else {
             console.log('You are not Rustam, sorry you can only see on this!')
         }
-        return true;
     }
     var data = {
         message: 'You must sign-in first',
         timeout: 2000
     };
-    this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+    //this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
     return false;
 };
 
@@ -225,11 +235,22 @@ Challenge.prototype.displayData = function (key, cnt, title, items) {
     var count;
     var tit;
     var count = div.getElementsByClassName('cnt')[0];
+
+    var progress_bar = div.getElementsByClassName('progress-bar-success')[0]
     var tit = div.getElementsByClassName('title')[0];
     var page_items = div.getElementsByClassName('items')[0];
+    var per = 0;
+    if (key == 'purpose-id-1') {
+        per = 100 - parseInt(cnt) * 100 / 30;
+    } else {
+        per = 100 - parseInt(cnt) * 100 / 50;
+    }
+
     page_items.innerHTML = '';
     if (cnt && title) {
         count.textContent = cnt;
+        progress_bar.textContent = String(per) + "% Complete (success)";
+        progress_bar.style.width = per + '%';
         tit.textContent = title;
         if (items) {
             for (key in items) {
@@ -247,6 +268,8 @@ Challenge.prototype.displayData = function (key, cnt, title, items) {
     } else {
         console.log('la problema data display function');
     }
+    var progress = div.getElementsByClassName('progress')[0];
+    progress.hidden = false;
 };
 
 Challenge.prototype.checkSetup = function () {
@@ -265,5 +288,6 @@ Challenge.prototype.checkSetup = function () {
 };
 
 window.onload = function () {
+
     window.challenge = new Challenge();
 };

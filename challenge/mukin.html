@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <title>Rustam Mukin Challenge</title>
     <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kurale|Slabo+27px" rel="stylesheet">
+    <meta name="viewport" content="width=640, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
     <link rel="stylesheet" type="text/css" href="challenge.css">
 </head>
 
@@ -13,9 +16,9 @@
     <div hidden id="fog"></div>
     <div hidden id="inputfeild">
         <h1>
- 			so, what did you do, Rustam?
- 		</h1>
-        <!--	<text id="txtarea" type="textarea" name="" value="write it here!" wrap="soft" maxlength="234"/> -->
+            so, what did you do, Rustam?
+        </h1>
+        <!--    <text id="txtarea" type="textarea" name="" value="write it here!" wrap="soft" maxlength="234"/> -->
         <textarea id="txtarea" name="" value="write it here!" wrap="soft" maxlength="234"> </textarea>
         <input id="txtbut" type="button" name="" value="i'm awesome!" />
         <input id="txtbut-close" type="button" name="" value="screw you guys, i'm going home" />
@@ -24,15 +27,18 @@
         <div id="user-container">
             <div id="user-pic"></div>
             <div id="user-name"></div>
-            <button id="sign-out">sign-out</button>
-            <button id="sign-in">sign-in with Google</button>
         </div>
-        <h1 id="msg">#RUSTAMMUKINCHALLENGE<span style="font-size: 43.1pt">2017</span></h1>
+        <h1 id="msg">#RUSTAMMUKINCHALLENGE<span style="font-size: 43.1pt">2<span id="sign-in">0</span><span id="sign-out">1</span>7</span></h1>
     </div>
 
     <div id="left">
         <div class="counter" id="purpose-id-1">
-            <div class="cnt"></div>
+            <div hidden class="progress" style="background-color: white;border-top:1px solid #333;border-bottom:1px solid #333;border-radius:0;">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                aria-valuemin="0" aria-valuemax="100" style="background-color:#333; width:100%">
+                </div>
+            </div>
+            <div class="cnt-b cnt"></div>
             <div class="title"></div>
             <form hidden>
                 <input class="name" id="input" type="text" name="" value="<photoset's title>" />
@@ -45,7 +51,12 @@
     </div>
     <div id="right">
         <div class="counter" id="purpose-id-2">
-            <div class="cnt"></div>
+            <div hidden class="progress" style="background-color: white;border-top:1px solid #333;border-bottom:1px solid #333;border-radius:0;">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"
+                aria-valuemin="0" aria-valuemax="100" style="background-color:green; width:100%">
+                </div>
+            </div>
+            <div class="cnt-b cnt"></div>
             <div class="title">
                 <div id="title"></div>
             </div>
@@ -62,18 +73,6 @@
     <div id="footer"></div>
 
     <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        var config = {
-            apiKey: "AIzaSyCeDBulZRsr8dyCbLiOrkxnCWndjwGnPlg",
-            authDomain: "challenge-e0a93.firebaseapp.com",
-            databaseURL: "https://challenge-e0a93.firebaseio.com",
-            storageBucket: "challenge-e0a93.appspot.com",
-            messagingSenderId: "389544971664"
-        };
-        firebase.initializeApp(config);
-
-    </script>
     <script type="text/javascript" src="challenge.js"></script>
 </body>
 
