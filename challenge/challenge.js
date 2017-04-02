@@ -194,7 +194,7 @@ Challenge.prototype.onAuthStateChanged = function (user) {
 
 Challenge.prototype.checkSignedInWithMessage = function () {
     if (this.auth.currentUser) {
-        if (this.auth.currentUser.displayName == 'Rustam Mukin') {
+        if ((this.auth.currentUser.displayName == 'Рустам Мукин') || (this.auth.currentUser.displayName == 'Rustam Mukin')){
             return true;    
         } else {
             console.log('You are not Rustam, sorry you can only see on this!')
